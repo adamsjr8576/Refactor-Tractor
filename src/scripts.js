@@ -31,7 +31,7 @@ import './images/stopwatch.svg'
 import './images/trophy.svg'
 
 
-//Generate random user 
+//Generate random user
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
 //Repo variables
@@ -66,22 +66,22 @@ function dropYear(dates) {
 }
 $(document).ready(function () {
 
-  //Packery Items 
-  // let $grid = $('.grid').packery({
-  //   itemSelector: '.grid-item',
-  //   columnWidth: 30,
-  //   rowHeight: 30,
-  //   gutter: 4,
-  // });
+  //Packery Items
+  let $grid = $('.grid').packery({
+    itemSelector: '.grid-item',
+    columnWidth: 30,
+    rowHeight: 30,
+    gutter: 4,
+  });
 
-  // let $draggable = $('.draggable').draggabilly({
-  //   containment: true
-  // });
+  let $draggable = $('.draggable').draggabilly({
+    containment: true
+  });
 
-  // $grid.find('.grid-item').each(function (i, gridItem) {
-  //   let draggie = new Draggabilly(gridItem)
-  //   $grid.packery('bindDraggabillyEvents', draggie)
-  // });
+  $grid.find('.grid-item').each(function (i, gridItem) {
+    let draggie = new Draggabilly(gridItem)
+    $grid.packery('bindDraggabillyEvents', draggie)
+  });
 
 
   // Function to find user name
