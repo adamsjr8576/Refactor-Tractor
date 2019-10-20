@@ -65,6 +65,7 @@ function dropYear(dates) {
   return reformattedDates
 }
 $(document).ready(function () {
+  console.log('ready!')
 
   //Packery Items 
   // let $grid = $('.grid').packery({
