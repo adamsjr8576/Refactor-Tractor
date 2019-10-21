@@ -26,6 +26,10 @@
   align-items: center;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   background-color: $body_background_color;
   font-family: 'Open Sans', sans-serif;
@@ -63,6 +67,26 @@ header {
 
 main {
   margin-left: 45px;
+}
+
+.grid {
+  column-count: 3;
+  column-gap: 1em;
+  column-fill: balance;
+}
+
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid-item {
+  float: left;
+  width: 100%;
+  break-inside: avoid;
+  margin: 0 0 15px;
+  box-sizing: border-box;
 }
 
 .data-section {
@@ -121,6 +145,7 @@ main {
 
 canvas {
   @extend %border-bubble-feat;
+  margin: auto;
 }
 
 .number-of-steps-goal {
