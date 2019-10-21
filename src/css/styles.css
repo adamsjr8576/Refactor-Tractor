@@ -66,10 +66,7 @@ canvas {
 }
 
 .grid {
-  column-count: 3;
-  column-gap: 1em;
-  column-fill: balance;
-
+  box-sizing: border-box;
 }
 
 .grid:after {
@@ -80,11 +77,15 @@ canvas {
 
 .grid-item {
   float: left;
-  width: 100%;
-  break-inside: avoid;
-  margin: 0 0 15px;
   box-sizing: border-box;
-  display: inline-block;
+}
+
+.grid-item--width2 { 
+  width: 200px; 
+}
+
+.grid-item--height2 { 
+  height: 200px; 
 }
 
 .data-section {
