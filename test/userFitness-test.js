@@ -23,4 +23,8 @@ describe('UserFitness', () => {
     expect(UserFitness).to.be.a('function');
   });
 
+  it('should have access to the user ID', () => {
+    expect(userFitness.userID).to.eql(1);
+  });
+
 });
