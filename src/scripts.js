@@ -30,6 +30,7 @@ import './images/road.svg'
 import './images/screencapture.png'
 import './images/stopwatch.svg'
 import './images/trophy.svg'
+import './images/team.svg'
 
 
 //Generate random user
