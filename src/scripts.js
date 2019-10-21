@@ -30,6 +30,7 @@ import './images/screencapture.png'
 import './images/stopwatch.svg'
 import './images/trophy.svg'
 
+var Packery = require('packery');
 
 //Generate random user 
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
@@ -64,11 +65,26 @@ function dropYear(dates) {
   })
   return reformattedDates
 }
+
 $(document).ready(function () {
   console.log('ready!')
 
   //Packery Items 
+
+  var pckry = new Packery( '.grid', {
+  itemSelector: '.grid-item',
+    columnWidth: 30,
+    rowHeight: 30,
+    gutter: 10,
+});
   // let $grid = $('.grid').packery({
+  //   itemSelector: '.grid-item',
+  //   columnWidth: 30,
+  //   rowHeight: 30,
+  //   gutter: 4,
+  // });
+
+  // $('.grid').packery({
   //   itemSelector: '.grid-item',
   //   columnWidth: 30,
   //   rowHeight: 30,
