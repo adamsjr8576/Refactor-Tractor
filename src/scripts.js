@@ -288,27 +288,25 @@ $(document).ready(function () {
   // Challenges
 
   function insertStepStreak() {
-    let list = `<ul class="steps_ul">`
+    let stepContainer = `<div class="border-bubble">`;
     activity.returnThreeDayStepStreak().forEach(day => {
-      list += `<li class="date_li">
-             <p class="dates"> ${day}`
-    })
-    list += `</ul>`;
-    return list;
+      stepContainer += `<p class="data-text"> ${day}</p>`;
+    });
+    stepContainer += `</div>`;
+    return stepContainer;
   }
 
-  $('#increasing-steps').html(`${insertStepStreak()}`);
+  $('#increase-step-header').after(`${insertStepStreak()}`);
 
   function insertStairStreak() {
-    let list = `<ul class="stairs_ul">`
+    let stairContainer = `<div class="border-bubble">`;
     activity.returnTwoDayStairStreak().forEach(day => {
-      list += `<li class="date_li">
-             <p class="dates"> ${day}`
+      stairContainer += `<p class="data-text"> ${day}`
     })
-    list += `</ul>`;
-    return list;
+    stairContainer += `</div>`;
+    return stairContainer;
   }
 
-  $('#increasing-stairs').html(`${insertStairStreak()}`);
+  $('#increasing-stairs-container').after(`${insertStairStreak()}`);
 
 })
