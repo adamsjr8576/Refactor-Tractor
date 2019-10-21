@@ -97,7 +97,7 @@ $(document).ready(function () {
   $('#date').text(`${formattedDate}`);
 
   //Hydration
-  $('#water-consumed').text(`${hydration.returnDailyFluidOunces(date)} ounces \n\n`);
+  $('#water-consumed').text(`${hydration.returnDailyFluidOunces(date)} Ounces \n\n`);
 
   const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
     type: 'horizontalBar',
@@ -106,13 +106,13 @@ $(document).ready(function () {
       datasets: [{
         data: hydration.returnWeeklyNumOunces(),
         backgroundColor: [
-          'rgba(92, 117, 218, 0.6)',
-          'rgba(242, 188, 51, 0.6)',
-          'rgba(126, 221, 255, 0.6)',
-          'rgba(92, 117, 218, 0.6)',
-          'rgba(242, 188, 51, 0.6)',
-          'rgba(126, 221, 255, 0.6)',
-          'rgba(92, 117, 218, 0.6)'
+          'rgba(92, 117, 218, 0.9)',
+          'rgba(242, 188, 51, 0.9)',
+          'rgba(126, 221, 255, 0.9)',
+          'rgba(92, 117, 218, 0.9)',
+          'rgba(242, 188, 51, 0.9)',
+          'rgba(126, 221, 255, 0.9)',
+          'rgba(92, 117, 218, 0.9)'
         ],
       }]
     },
@@ -135,7 +135,7 @@ $(document).ready(function () {
   });
 
   //Sleep
-  $('#hours-slept-day').text(`${sleep.returnSleepHours(date)} hours | ${sleep.returnSleepQuality(date)} quality`);
+  $('#hours-slept-day').text(`${sleep.returnSleepHours(date)} Hours | ${sleep.returnSleepQuality(date)} Quality`);
 
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
@@ -144,28 +144,28 @@ $(document).ready(function () {
       datasets: [{
         data: sleep.returnWeekOfSleepHours(1),
         label: "Sleep Hours",
-        borderColor: "rgba(92, 117, 218, 0.6)",
+        borderColor: "rgba(92, 117, 218, 0.9)",
         fill: false,
         lineTension: 0.1
       },
       {
         data: Array(7).fill(sleep.returnAvgSleepHours()),
         label: "Average Hours of Sleep",
-        borderColor: "rgba(92, 117, 218, 0.6)",
+        borderColor: "rgba(92, 117, 218, 0.9)",
         fill: false,
         borderDash: [10, 5]
       },
       {
         data: sleep.returnWeekOfSleepQuality(1),
         label: "Quality of Sleep",
-        borderColor: "rgba(242, 188, 51, 0.6)",
+        borderColor: "rgba(242, 188, 51, 0.9)",
         fill: false,
         lineTension: 0.1
       },
       {
         data: Array(7).fill(sleep.returnAvgSleepQuality()),
         label: "Average Quality of Sleep",
-        borderColor: "rgba(242, 188, 51, 0.6)",
+        borderColor: "rgba(242, 188, 51, 0.9)",
         fill: false,
         borderDash: [10, 5]
       }
@@ -185,7 +185,7 @@ $(document).ready(function () {
         yAxes: [{
           ticks: {
             beginAtZero: true,
-            fontColor: "rgba(92, 117, 218, 0.6)"
+            fontColor: "rgba(92, 117, 218, 0.9)"
           },
           scaleLabel: {
             display: true,
@@ -200,7 +200,7 @@ $(document).ready(function () {
             beginAtZero: true,
             min: 0,
             max: 10,
-            fontColor: "rgba(242, 188, 51, 0.6)"
+            fontColor: "rgba(242, 188, 51, 0.9)"
           },
           scaleLabel: {
             display: true,
@@ -211,7 +211,7 @@ $(document).ready(function () {
     }
   });
 
-  $('#longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} hours`);
+  $('#longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} Hours`);
 
   //Activity Section
 
@@ -262,10 +262,10 @@ $(document).ready(function () {
   $('#stairs').text(`${activity.returnFlightsOfStairs(date)}`);
   $('#average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
   $('#distance-in-miles').text(`${activity.returnMilesWalked()} Miles`);
-  $('#most-active').text(`${activityRepo.returnMostActive()[0]}: ${activityRepo.returnMostActive()[1]} minutes`);
-  $('#week-review-minutes').text(`${activity.returnAverageMinutesActiveForWeek(1)} minutes active`);
-  $('#week-review-steps').text(`${activity.returnAverageStepsForWeek(1)} steps taken`);
-  $('#week-review-stairs').text(`${activity.returnAverageStairsForWeek(1)} flights of stairs`);
+  $('#most-active').text(`${activityRepo.returnMostActive()[0]}: ${activityRepo.returnMostActive()[1]} Minutes`);
+  $('#week-review-minutes').text(`${activity.returnAverageMinutesActiveForWeek(1)} Minutes Active`);
+  $('#week-review-steps').text(`${activity.returnAverageStepsForWeek(1)} Steps Taken`);
+  $('#week-review-stairs').text(`${activity.returnAverageStairsForWeek(1)} Flights of Stairs`);
 
   // Friends
 
@@ -277,13 +277,13 @@ $(document).ready(function () {
       let userName = findUserName(Number(userID));
       list += `<li class="friends_li">
              <p class="data-text"><b>${userName}</b>:</p>
-             <p class="data-text border-bottom">${activity.returnFriendsStepCount()[0][userID]} steps</p>`;
+             <p class="data-text border-bottom">${activity.returnFriendsStepCount()[0][userID]} Steps</p>`;
     });
     list += `</ul>`;
     return list;
   }
 
-  $('#friends-step').html(`${insertFriendSteps()}`);
+  $('#friends-step').after(`${insertFriendSteps()}`);
 
   // Challenges
 
