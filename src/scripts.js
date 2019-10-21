@@ -215,7 +215,7 @@ $(document).ready(function () {
 
   //Activity Section
 
-  var bar = new ProgressBar.Circle('.number-of-steps-day', {
+  var bar = new ProgressBar.Circle('#number-of-steps-day', {
     color: '#aaa',
     svgStyle: {
       display: 'block',
@@ -259,13 +259,13 @@ $(document).ready(function () {
   $('#average-minutes-active').text(`${activityRepo.returnAverage(date, 'minutesActive')}`)
   $('#distance').text(`${activity.returnNumStepsDay(date)}`);
   $('#average-distance').text(`${activityRepo.returnAverage(date, 'numSteps')}`)
-  $('.stairs').text(`${activity.returnFlightsOfStairs(date)}`);
-  $('.average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
-  $('.distance-in-miles').text(`${activity.returnMilesWalked()} Miles`);
-  $('.most-active').text(`${activityRepo.returnMostActive()[0]}: ${activityRepo.returnMostActive()[1]} minutes`);
-  $('.week-review-minutes').text(`${activity.returnAverageMinutesActiveForWeek(1)} minutes active`);
-  $('.week-review-steps').text(`${activity.returnAverageStepsForWeek(1)} steps taken`);
-  $('.week-review-stairs').text(`${activity.returnAverageStairsForWeek(1)} flights of stairs`);
+  $('#stairs').text(`${activity.returnFlightsOfStairs(date)}`);
+  $('#average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
+  $('#distance-in-miles').text(`${activity.returnMilesWalked()} Miles`);
+  $('#most-active').text(`${activityRepo.returnMostActive()[0]}: ${activityRepo.returnMostActive()[1]} minutes`);
+  $('#week-review-minutes').text(`${activity.returnAverageMinutesActiveForWeek(1)} minutes active`);
+  $('#week-review-steps').text(`${activity.returnAverageStepsForWeek(1)} steps taken`);
+  $('#week-review-stairs').text(`${activity.returnAverageStairsForWeek(1)} flights of stairs`);
 
   // Friends
 
@@ -276,14 +276,14 @@ $(document).ready(function () {
     userIDs.forEach(userID => {
       let userName = findUserName(Number(userID));
       list += `<li class="friends_li">
-             <p class="friends--steps"><b>${userName}</b>:</p>
-             <p>${activity.returnFriendsStepCount()[0][userID]} steps</p>`;
+             <p class="data-text"><b>${userName}</b>:</p>
+             <p class="data-text border-bottom">${activity.returnFriendsStepCount()[0][userID]} steps</p>`;
     });
     list += `</ul>`;
     return list;
   }
 
-  $('.friends-step').html(`${insertFriendSteps()}`);
+  $('#friends-step').html(`${insertFriendSteps()}`);
 
   // Challenges
 
@@ -297,7 +297,7 @@ $(document).ready(function () {
     return list;
   }
 
-  $('.increasing-steps').html(`${insertStepStreak()}`);
+  $('#increasing-steps').html(`${insertStepStreak()}`);
 
   function insertStairStreak() {
     let list = `<ul class="stairs_ul">`
@@ -309,6 +309,6 @@ $(document).ready(function () {
     return list;
   }
 
-  $('.increasing-stairs').html(`${insertStairStreak()}`);
+  $('#increasing-stairs').html(`${insertStairStreak()}`);
 
 })

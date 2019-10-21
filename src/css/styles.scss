@@ -94,7 +94,7 @@ main {
   font-size: $font_size_large;
   font-weight: $font_weight_large;
   margin: 5px;
-  color: $header_color
+  color: $header_color;
 }
 
 .data-text {
@@ -144,15 +144,4 @@ ul {
 .number-of-steps-day {
   margin: 5px auto;
   width: 50%;
-  font-size: $font_size_large;
-}
-
-h4 {
-  font-weight: 600;
-  font-size: 1em;
-}
-
-p {
-  font-weight: 200;
-  font-size: 1em;
 }
