@@ -16,7 +16,8 @@ import hydrationData from "../data/hydration";
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/normalize.css';
-import './css/styles.css';
+// import './css/styles.css';
+import './css/styles.scss';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/appointment.svg'
@@ -67,21 +68,21 @@ function dropYear(dates) {
 $(document).ready(function () {
 
   //Packery Items
-  let $grid = $('.grid').packery({
-    itemSelector: '.grid-item',
-    columnWidth: 30,
-    rowHeight: 30,
-    gutter: 4,
-  });
-
-  let $draggable = $('.draggable').draggabilly({
-    containment: true
-  });
-
-  $grid.find('.grid-item').each(function (i, gridItem) {
-    let draggie = new Draggabilly(gridItem)
-    $grid.packery('bindDraggabillyEvents', draggie)
-  });
+  // let $grid = $('#grid').packery({
+  //   itemSelector: 'grid-item',
+  //   columnWidth: 30,
+  //   rowHeight: 30,
+  //   gutter: 4,
+  // });
+  //
+  // let $draggable = $('.draggable').draggabilly({
+  //   containment: true
+  // });
+  //
+  // $grid.find('.grid-item').each(function (i, gridItem) {
+  //   let draggie = new Draggabilly(gridItem)
+  //   $grid.packery('bindDraggabillyEvents', draggie)
+  // });
 
 
   // Function to find user name
@@ -90,13 +91,13 @@ $(document).ready(function () {
   }
 
   //User Section
-  $('.username').text(`${user.returnUserName()}`)
+  $('#username').text(`${user.returnUserName()}`)
 
   //Date Section
-  $('.date').text(`${formattedDate}`);
+  $('#date').text(`${formattedDate}`);
 
   //Hydration
-  $('.water-consumed').text(`${hydration.returnDailyFluidOunces(date)} ounces \n\n`);
+  $('#water-consumed').text(`${hydration.returnDailyFluidOunces(date)} ounces \n\n`);
 
   const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
     type: 'horizontalBar',
@@ -134,7 +135,7 @@ $(document).ready(function () {
   });
 
   //Sleep
-  $('.hours-slept-day').text(`${sleep.returnSleepHours(date)} hours | ${sleep.returnSleepQuality(date)} quality`);
+  $('#hours-slept-day').text(`${sleep.returnSleepHours(date)} hours | ${sleep.returnSleepQuality(date)} quality`);
 
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
@@ -210,7 +211,7 @@ $(document).ready(function () {
     }
   });
 
-  $('.longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} hours`);
+  $('#longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} hours`);
 
   //Activity Section
 
@@ -220,8 +221,8 @@ $(document).ready(function () {
       display: 'block',
       width: '100%'
     },
-    strokeWidth: 5,
-    trailWidth: 2,
+    strokeWidth: 12,
+    trailWidth: 8,
     easing: 'easeInOut',
     duration: 1400,
     text: {
@@ -229,11 +230,11 @@ $(document).ready(function () {
     },
     from: {
       color: '#fff940',
-      width: 2
+      width: 4
     },
     to: {
       color: '#f2bc33',
-      width: 5
+      width: 10
     },
 
     step(state, circle) {
@@ -246,19 +247,18 @@ $(document).ready(function () {
       } else {
         circle.setText(`${activity.returnNumStepsDay(date)} steps`);
       }
-
     }
   });
 
   let percentSteps = activity.returnNumStepsDay(date) / user.dailyStepGoal;
   bar.animate(percentSteps > 1 ? percentSteps = 1 : percentSteps); // Number from 0.0 to 1.0
 
-  $('.number-of-steps-goal').text(`Step Goal: ${user.dailyStepGoal}`);
-  $('.avg-number-of-steps-goal').text(`Average Step Goal: ${userRepo.returnAverageStepGoal()}`);
-  $('.number-of-minutes-active-day').text(`${activity.returnMinutesActive(date)}`);
-  $('.average-minutes-active').text(`${activityRepo.returnAverage(date, 'minutesActive')}`)
-  $('.distance').text(`${activity.returnNumStepsDay(date)}`);
-  $('.average-distance').text(`${activityRepo.returnAverage(date, 'numSteps')}`)
+  $('#number-of-steps-goal').text(`${user.dailyStepGoal}`);
+  $('#avg-number-of-steps-goal').text(`${userRepo.returnAverageStepGoal()}`);
+  $('#number-of-minutes-active-day').text(`${activity.returnMinutesActive(date)}`);
+  $('#average-minutes-active').text(`${activityRepo.returnAverage(date, 'minutesActive')}`)
+  $('#distance').text(`${activity.returnNumStepsDay(date)}`);
+  $('#average-distance').text(`${activityRepo.returnAverage(date, 'numSteps')}`)
   $('.stairs').text(`${activity.returnFlightsOfStairs(date)}`);
   $('.average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
   $('.distance-in-miles').text(`${activity.returnMilesWalked()} Miles`);
