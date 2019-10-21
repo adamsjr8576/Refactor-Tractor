@@ -69,7 +69,6 @@ canvas {
   column-count: 3;
   column-gap: 1em;
   column-fill: balance;
-
 }
 
 .grid:after {
@@ -181,4 +180,22 @@ h4 {
 p {
   font-weight: 200;
   font-size: 1em;
+}
+
+/*Media Queries: Small screens and tablets*/ 
+
+@media only screen and (max-width: 900px) {
+  .grid {
+    column-count: 2;
+    column-gap: 1em;
+    column-fill: balance;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .grid {
+    column-count: 1;
+    column-gap: 1em;
+    column-fill: balance;
+  }
 }
