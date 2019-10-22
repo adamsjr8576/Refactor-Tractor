@@ -30,7 +30,7 @@ import './images/stopwatch.svg'
 import './images/trophy.svg'
 import './images/team.svg'
 
-// var Packery = require('packery');
+var Packery = require('packery');
 
 //Generate random user
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
@@ -65,8 +65,7 @@ function dropYear(dates) {
   })
   return reformattedDates
 }
-$(document).ready(function () {
-console.log('ready')
+
   //Packery Items
 
   var pckry = new Packery( '#grid', {
@@ -319,4 +318,3 @@ console.log('ready')
 
   $('#increasing-stairs-container').after(`${insertStairStreak()}`);
 
-})
