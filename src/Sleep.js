@@ -5,34 +5,19 @@ class Sleep extends UserFitness {
     super(sleepData, user);
   }
 
-  returnAvgSleepHours() {
-    return Number((this.userData.reduce((totalHours, day) => {
-      totalHours += day.hoursSlept;
-      return totalHours;
+  returnAvgSleepInfo(sleepInfo) {
+    return Number((this.userData.reduce((acc, day) => {
+      acc += day[sleepInfo];
+      return acc;
     }, 0) / this.userData.length).toFixed(2));
+  };
+
+  returnSleepInfo(date, sleepInfo) {
+    return this.userData.find(day => day.date === date)[sleepInfo];
   }
 
-  returnAvgSleepQuality() {
-    return Number((this.userData.reduce((totalQuality, day) => {
-      totalQuality += day.sleepQuality;
-      return totalQuality;
-    }, 0) / this.userData.length).toFixed(2));
-  }
-
-  returnSleepHours(date) {
-    return this.userData.find(day => day.date === date).hoursSlept;
-  }
-
-  returnSleepQuality(date) {
-    return this.userData.find(day => day.date === date).sleepQuality;
-  }
-
-  returnWeekOfSleepHours(week) {
-    return this.returnWeekOfData(week).map(day => day.hoursSlept);
-  }
-
-  returnWeekOfSleepQuality(week) {
-    return this.returnWeekOfData(week).map(day => day.sleepQuality);
+  returnWeekOfSleepInfo(week, sleepInfo) {
+    return this.returnWeekOfData(week, this.userData).map(day => day[sleepInfo]);
   }
 }
 
