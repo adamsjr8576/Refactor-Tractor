@@ -135,35 +135,35 @@ $(document).ready(function () {
   });
 
   //Sleep
-  $('#hours-slept-day').text(`${sleep.returnSleepHours(date)} Hours | ${sleep.returnSleepQuality(date)} Quality`);
+  $('#hours-slept-day').text(`${sleep.returnSleepInfo(date, 'hoursSlept')} Hours | ${sleep.returnSleepInfo(date, 'sleepQuality')} Quality`);
 
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
     data: {
       labels: dropYear(sleep.returnWeek(1)),
       datasets: [{
-        data: sleep.returnWeekOfSleepHours(1),
+        data: sleep.returnWeekOfSleepInfo(1, 'hoursSlept'),
         label: "Sleep Hours",
         borderColor: "rgba(92, 117, 218, 0.9)",
         fill: false,
         lineTension: 0.1
       },
       {
-        data: Array(7).fill(sleep.returnAvgSleepHours()),
+        data: Array(7).fill(sleep.returnAvgSleepInfo('hoursSlept')),
         label: "Average Hours of Sleep",
         borderColor: "rgba(92, 117, 218, 0.9)",
         fill: false,
         borderDash: [10, 5]
       },
       {
-        data: sleep.returnWeekOfSleepQuality(1),
+        data: sleep.returnWeekOfSleepInfo(1, 'sleepQuality'),
         label: "Quality of Sleep",
         borderColor: "rgba(242, 188, 51, 0.9)",
         fill: false,
         lineTension: 0.1
       },
       {
-        data: Array(7).fill(sleep.returnAvgSleepQuality()),
+        data: Array(7).fill(sleep.returnAvgSleepInfo('sleepQuality')),
         label: "Average Quality of Sleep",
         borderColor: "rgba(242, 188, 51, 0.9)",
         fill: false,
