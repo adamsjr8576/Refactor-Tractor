@@ -70,9 +70,7 @@ main {
 }
 
 .grid {
-  column-count: 3;
-  column-gap: 1em;
-  column-fill: balance;
+  box-sizing: border-box;
 }
 
 .grid:after {
@@ -83,9 +81,6 @@ main {
 
 .grid-item {
   float: left;
-  width: 100%;
-  break-inside: avoid;
-  margin: 0 0 15px;
   box-sizing: border-box;
 }
 
@@ -109,7 +104,7 @@ main {
 
 .data-heading {
   text-align: $text_align;
-  font-size: $font_size_xlarge;
+  font-size: $font_size_large;
   margin: 0;
   font-weight: $font_weight_medium;
   color: $header_color;
@@ -132,14 +127,14 @@ main {
 }
 
 .subtext {
-  font-size: $font_size_large;
+  font-size: $font_size_medium;
   font-weight: $font_weight_large;
   margin: 5px;
   color: $header_color;
 }
 
 .data-text {
-  font-size: $font_size_medium;
+  font-size: $font_size_small;
   margin: 10px;
 }
 
@@ -186,3 +181,9 @@ ul {
   width: 75%;
   margin: auto;
 }
+
+.date {
+  font-size: $font_size_small;
+  color: white;
+}
+

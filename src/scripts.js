@@ -1,4 +1,3 @@
-
 import $ from 'jquery';
 
 import UserRepo from "./UserRepo";
@@ -31,6 +30,7 @@ import './images/stopwatch.svg'
 import './images/trophy.svg'
 import './images/team.svg'
 
+// var Packery = require('packery');
 
 //Generate random user
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
@@ -42,8 +42,8 @@ const activityRepo = new ActivityRepo(activityData, userData);
 
 //Individual Class Repos
 const user = new User(userData[uniqueUserIndex]);
-const hydration = new Hydration(hydrationData, user.id);
-const sleep = new Sleep(allSleepData, user.id);
+const hydration = new Hydration(hydrationData, user);
+const sleep = new Sleep(allSleepData, user);
 const activity = new Activity(activityData, user);
 
 //Date
@@ -66,8 +66,18 @@ function dropYear(dates) {
   return reformattedDates
 }
 $(document).ready(function () {
-
+console.log('ready')
   //Packery Items
+
+  var pckry = new Packery( '#grid', {
+  itemSelector: '.grid-item',
+    columnWidth: 30,
+    rowHeight: 30,
+    gutter: 10,
+});
+
+  
+
   // let $grid = $('#grid').packery({
   //   itemSelector: 'grid-item',
   //   columnWidth: 30,
@@ -78,10 +88,10 @@ $(document).ready(function () {
   // let $draggable = $('.draggable').draggabilly({
   //   containment: true
   // });
-  //
-  // $grid.find('.grid-item').each(function (i, gridItem) {
+
+  // pckry.find('.grid-item').each(function (i, gridItem) {
   //   let draggie = new Draggabilly(gridItem)
-  //   $grid.packery('bindDraggabillyEvents', draggie)
+  //   pckry('bindDraggabillyEvents', draggie)
   // });
 
 
@@ -94,7 +104,7 @@ $(document).ready(function () {
   $('#username').text(`${user.returnUserName()}`)
 
   //Date Section
-  $('#date').text(`${formattedDate}`);
+  $('.date').text(`${formattedDate}`);
 
   //Hydration
   $('#water-consumed').text(`${hydration.returnDailyFluidOunces(date)} Ounces \n\n`);

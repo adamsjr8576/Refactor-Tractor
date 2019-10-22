@@ -5,6 +5,7 @@ import sleepData from '../data/sleep-test-data';
 import userData from '../data/users-test-data';
 import allSleepData from '../data/sleep';
 
+import UserFitness from '../src/UserFitness'
 import Sleep from '../src/Sleep';
 import User from '../src/User';
 
@@ -14,8 +15,8 @@ describe('Sleep', () => {
   let user, sleep, fullSleep;
   beforeEach(() => {
     user = new User(userData[0]);
-    sleep = new Sleep(sleepData, user.id);
-    fullSleep = new Sleep(allSleepData, user.id);
+    sleep = new Sleep(sleepData, user);
+    fullSleep = new Sleep(allSleepData, user);
   })
 
   it('should be a function', () => {
@@ -24,14 +25,6 @@ describe('Sleep', () => {
 
   it('should be an instance of the class Sleep', () => {
     expect(sleep).to.be.an.instanceOf(Sleep);
-  });
-
-  it('should be able to store sleep data as a parameter', () => {
-    expect(sleep.sleepData).to.eql(sleepData);
-  });
-
-  it('should be able to store user id as a parameter', () => {
-    expect(sleep.userID).to.equal(user.id);
   });
 
   it('should return an array of dates for any desired week', () => {
