@@ -42,8 +42,8 @@ const activityRepo = new ActivityRepo(activityData, userData);
 
 //Individual Class Repos
 const user = new User(userData[uniqueUserIndex]);
-const hydration = new Hydration(hydrationData, user.id);
-const sleep = new Sleep(allSleepData, user.id);
+const hydration = new Hydration(hydrationData, user);
+const sleep = new Sleep(allSleepData, user);
 const activity = new Activity(activityData, user);
 
 //Date

@@ -1,6 +1,6 @@
 class UserFitness {
-  constructor(data, id) {
-    this.userData = this.findUser(data, id);
+  constructor(data, user) {
+    this.userData = this.findUser(data, user.id);
   }
 
   findUser(data, id) {

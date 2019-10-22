@@ -1,8 +1,8 @@
 import UserFitness from "./UserFitness";
 
 class Hydration extends UserFitness {
-  constructor(hydrationData, userID) {
-    super(hydrationData, userID);
+  constructor(hydrationData, user) {
+    super(hydrationData, user);
   }
 
   returnAverageFluidOunces() {

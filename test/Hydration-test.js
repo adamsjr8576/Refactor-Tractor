@@ -4,6 +4,7 @@ const expect = chai.expect;
 import hydrationData from '../data/hydration-test-data';
 import userData from '../data/users-test-data';
 
+import UserFitness from '../src/UserFitness'
 import Hydration from '../src/Hydration';
 import User from '../src/User';
 
@@ -14,7 +15,7 @@ describe('Hydration', () => {
 
   beforeEach(() => {
     user = new User(userData[0])
-    hydration = new Hydration(hydrationData, user.id)
+    hydration = new Hydration(hydrationData, user)
   });
 
   it('should be a function', () => {
@@ -25,16 +26,8 @@ describe('Hydration', () => {
     expect(hydration).to.be.an.instanceOf(Hydration);
   });
 
-  it('should hold hydration data', () => {
-    expect(hydration.hydrationData).to.eql(hydrationData);
-  });
-
-  it('should contain userID', () => {
-    expect(hydration.userID).to.equal(user.id);
-  });
-
   it('should return the dates for the last week', () => {
-    expect(hydration.returnWeek()).to.eql(
+    expect(hydration.returnWeek(1)).to.eql(
       [
         "2019/06/16",
         "2019/06/17",

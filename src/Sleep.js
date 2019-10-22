@@ -1,8 +1,8 @@
 import UserFitness from "./UserFitness";
 
 class Sleep extends UserFitness {
-  constructor(sleepData, userID) {
-    super(sleepData, userID);
+  constructor(sleepData, user) {
+    super(sleepData, user);
   }
 
   returnAvgSleepHours() {
