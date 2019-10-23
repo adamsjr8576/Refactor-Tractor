@@ -254,7 +254,7 @@ function dropYear(dates) {
       if (value === 0) {
         circle.setText('');
       } else {
-        circle.setText(`${activity.returnNumStepsDay(date)} steps`);
+        circle.setText(`${activity.returnAverageMinutesActiveForWeek(date)} steps`);
       }
     }
   });
@@ -273,8 +273,9 @@ function dropYear(dates) {
   $('#distance-in-miles').text(`${activity.returnMilesWalked()} Miles`);
   $('#most-active').text(`${activityRepo.returnMostActive()[0]}: ${activityRepo.returnMostActive()[1]} Minutes`);
   $('#week-review-minutes').text(`${activity.returnAverageMinutesActiveForWeek(1)} Minutes Active`);
-  $('#week-review-steps').text(`${activity.returnAverageStepsForWeek(1)} Steps Taken`);
-  $('#week-review-stairs').text(`${activity.returnAverageStairsForWeek(1)} Flights of Stairs`);
+  $('#week-review-steps').text(`${activity.returnAverageForWeek(1, 'numSteps')} 'Number of steps'`);
+  $('#week-review-stairs').text(`${activity.returnAverageForWeek(1, 'flightsOfStairs')} 'flightsOfStairs'`);
+  sleep.returnWeekOfSleepInfo(1, 'sleepQuality')
 
   // Friends
 
