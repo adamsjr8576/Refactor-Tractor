@@ -23,14 +23,6 @@ class Activity extends UserFitness {
     return this.userData.find(day => day.date === date).flightsOfStairs;
   }
 
-  returnAverageMinutesActiveForWeek(week) {
-    let weekOfData = this.returnWeekOfData(week, this.userData);
-    return Math.floor(weekOfData.reduce((totalMinutes, eachDay) => {
-      totalMinutes += eachDay.minutesActive
-      return totalMinutes
-    }, 0) / 7)
-  }
-
 returnAverageForWeek(week, activityData) {
     let weekOfData = this.returnWeekOfData(week, this.userData);
     return Math.floor(weekOfData.reduce((acc, day) => {
@@ -40,14 +32,6 @@ returnAverageForWeek(week, activityData) {
     }, 0) / 7)
   }
   
-  returnAverageActivityForWeek(week, total) {
-    let weekOfData = this.returnWeekOfData(week, this.userData);
-    return Math.floor(weekOfData.reduce((total, eachDay) => {
-      total += eachDay.numSteps
-      return total
-    }, 0) / 7)
-  }
-
   metStepGoal(date) {
     let numSteps = this.userData.find(day => day.date === date).numSteps
     return numSteps >= this.user.dailyStepGoal
@@ -76,11 +60,21 @@ returnAverageForWeek(week, activityData) {
     return [stepObj, this.user.friends[totalStepsPerFriend.indexOf(Math.max(...totalStepsPerFriend))]]
   }
 
-  returnThreeDayStepStreak() {
+  returnAverageForWeek(week, activityData) {
+    let weekOfData = this.returnWeekOfData(week, this.userData);
+    return Math.floor(weekOfData.reduce((acc, day) => {
+      console.log(day[activityData])
+      acc += day[activityData]
+      return acc
+    }, 0) / 7)
+  }
+  
+
+  returnThreeDayStreak(activityData) {
     let specificUser = this.userData.reverse();
     let dates = [];
     specificUser.some((user, i, specificUser) => {
-      if (specificUser[i].numSteps < specificUser[i + 1].numSteps && specificUser[i + 1].numSteps < specificUser[i + 2].numSteps) {
+      if (specificUser[i][activityData] < specificUser[i + 1][activityData] && specificUser[i + 1][activityData] < specificUser[i + 2][activityData]) {
         dates.push(specificUser[i].date);
         dates.push(specificUser[i + 1].date);
         dates.push(specificUser[i + 2].date);
@@ -91,11 +85,12 @@ returnAverageForWeek(week, activityData) {
     return dates;
   }
 
-  returnTwoDayStairStreak() {
+  returnTwoDayStreak(activityData) {
     var specificUser = this.userData.reverse();
+    console.log(specificUser)
     let dates = [];
     specificUser.some((user, i, specificUser) => {
-      if (specificUser[i].flightsOfStairs > specificUser[i + 1].flightsOfStairs) {
+      if (specificUser[i][activityData] > specificUser[i + 1][activityData]) {
         dates.push(specificUser[i].date);
         dates.push(specificUser[i + 1].date);
       }
@@ -104,6 +99,27 @@ returnAverageForWeek(week, activityData) {
 
     return dates;
   }
+
+  returnStreak(amount, activityData) {
+    var specificUser = this.userData.reverse();
+    let dates = [];
+    specificUser.some((user, i, specificUser) => {
+      if (specificUser[i][activityData] > specificUser[i + 1][activityData]) {
+        if (activityData === 'numSteps') {
+        dates.push(specificUser[i].date);
+        dates.push(specificUser[i + 1].date);
+      } 
+      else if (activityData === 'flightsOfStairs') {
+        dates.push(specificUser[i].date);
+        dates.push(specificUser[i + 1].date);
+        dates.push(specificUser[i + 2].date);
+        }
+      }
+      return dates.length === amount;
+    });
+    console.log(dates)
+    return dates;
+  }  
 
 
 }
