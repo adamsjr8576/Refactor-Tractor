@@ -41,6 +41,8 @@ class SleepRepo {
   }
 
   returnWeeklyLongestSleepers(week) {
+    this.sleepData.splice(-5, 5);
+
     let dataByUser = this.sleepData.reduce((arr, user) => {
       if (!arr[user.userID - 1]) {
         arr[user.userID - 1] = [user];
@@ -54,7 +56,7 @@ class SleepRepo {
       totalHours += day.hoursSlept;
       return totalHours;
     }, 0));
-    return [Math.max(...avgSleepHoursPerUser), avgSleepHoursPerUser.indexOf(Math.max(...avgSleepHoursPerUser)) + 1];
+    return [Math.round(Math.max(...avgSleepHoursPerUser)), avgSleepHoursPerUser.indexOf(Math.max(...avgSleepHoursPerUser)) + 1];
   }
 }
 
