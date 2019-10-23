@@ -40,22 +40,6 @@ returnAverageForWeek(week, activityData) {
     }, 0) / 7)
   }
   
-  // returnAverageStepsForWeek(week) {
-  //   let weekOfData = this.returnWeekOfData(week, this.userData);
-  //   return Math.floor(weekOfData.reduce((totalSteps, eachDay) => {
-  //     totalSteps += eachDay.numSteps
-  //     return totalSteps
-  //   }, 0) / 7)
-  // }
-
-  // returnAverageStairsForWeek(week, total) {
-  //   let weekOfData = this.returnWeekOfData(week, this.userData);
-  //   return Math.floor(weekOfData.reduce((totalStairs, eachDay) => {
-  //     totalStairs += eachDay.flightsOfStairs
-  //     return totalStairs
-  //   }, 0) / 7)
-  // }
-
   returnAverageActivityForWeek(week, total) {
     let weekOfData = this.returnWeekOfData(week, this.userData);
     return Math.floor(weekOfData.reduce((total, eachDay) => {
