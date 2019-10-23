@@ -94,7 +94,6 @@ function dropYear(dates) {
 
   // Function to find user name
   function findUserName(id) {
-    console.log(userRepo.data.find(user => user.id === id).name);
     return userRepo.data.find(user => user.id === id).name;
   }
 
@@ -147,7 +146,6 @@ getData('hydration/hydrationData').then(function(hydrationData) {
 
   //Sleep
 getData('sleep/sleepData').then(function(sleepData) {
-  // console.log(sleepData.sleepData);
   const sleepRepo = new SleepRepo(sleepData.sleepData);
   const sleep = new Sleep(sleepData.sleepData, user);
   $('#hours-slept-day').text(`${sleep.returnSleepInfo(date, 'hoursSlept')} Hours | ${sleep.returnSleepInfo(date, 'sleepQuality')} Quality`);
@@ -225,7 +223,6 @@ getData('sleep/sleepData').then(function(sleepData) {
       }
     }
   });
-  console.log(sleepRepo.returnWeeklyLongestSleepers(1));
   $('#longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} Hours`);
 });
 
