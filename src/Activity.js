@@ -31,19 +31,36 @@ class Activity extends UserFitness {
     }, 0) / 7)
   }
 
-  returnAverageStepsForWeek(week) {
+returnAverageForWeek(week, activityData) {
     let weekOfData = this.returnWeekOfData(week, this.userData);
-    return Math.floor(weekOfData.reduce((totalSteps, eachDay) => {
-      totalSteps += eachDay.numSteps
-      return totalSteps
+    return Math.floor(weekOfData.reduce((acc, day) => {
+      console.log(day[activityData])
+      acc += day[activityData]
+      return acc
     }, 0) / 7)
   }
+  
+  // returnAverageStepsForWeek(week) {
+  //   let weekOfData = this.returnWeekOfData(week, this.userData);
+  //   return Math.floor(weekOfData.reduce((totalSteps, eachDay) => {
+  //     totalSteps += eachDay.numSteps
+  //     return totalSteps
+  //   }, 0) / 7)
+  // }
 
-  returnAverageStairsForWeek(week) {
+  // returnAverageStairsForWeek(week, total) {
+  //   let weekOfData = this.returnWeekOfData(week, this.userData);
+  //   return Math.floor(weekOfData.reduce((totalStairs, eachDay) => {
+  //     totalStairs += eachDay.flightsOfStairs
+  //     return totalStairs
+  //   }, 0) / 7)
+  // }
+
+  returnAverageActivityForWeek(week, total) {
     let weekOfData = this.returnWeekOfData(week, this.userData);
-    return Math.floor(weekOfData.reduce((totalStairs, eachDay) => {
-      totalStairs += eachDay.flightsOfStairs
-      return totalStairs
+    return Math.floor(weekOfData.reduce((total, eachDay) => {
+      total += eachDay.numSteps
+      return total
     }, 0) / 7)
   }
 
