@@ -254,7 +254,7 @@ function dropYear(dates) {
       if (value === 0) {
         circle.setText('');
       } else {
-        circle.setText(`${activity.returnAverageMinutesActiveForWeek(date)} steps`);
+        circle.setText(`${activity.returnNumStepsDay(date)} steps`);
       }
     }
   });
@@ -272,10 +272,9 @@ function dropYear(dates) {
   $('#average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
   $('#distance-in-miles').text(`${activity.returnMilesWalked()} Miles`);
   $('#most-active').text(`${activityRepo.returnMostActive()[0]}: ${activityRepo.returnMostActive()[1]} Minutes`);
-  $('#week-review-minutes').text(`${activity.returnAverageMinutesActiveForWeek(1)} Minutes Active`);
+  $('#week-review-minutes').text(`${activity.returnAverageForWeek(1, 'minutesActive')} Minutes Active`);
   $('#week-review-steps').text(`${activity.returnAverageForWeek(1, 'numSteps')} 'Number of steps'`);
   $('#week-review-stairs').text(`${activity.returnAverageForWeek(1, 'flightsOfStairs')} 'flightsOfStairs'`);
-  sleep.returnWeekOfSleepInfo(1, 'sleepQuality')
 
   // Friends
 
@@ -299,7 +298,7 @@ function dropYear(dates) {
 
   function insertStepStreak() {
     let stepContainer = `<div class="border-bubble">`;
-    activity.returnThreeDayStepStreak().forEach(day => {
+    activity.returnThreeDayStreak('numSteps').forEach(day => {
       stepContainer += `<p class="data-text"> ${day}</p>`;
     });
     stepContainer += `</div>`;
@@ -310,7 +309,7 @@ function dropYear(dates) {
 
   function insertStairStreak() {
     let stairContainer = `<div class="border-bubble">`;
-    activity.returnTwoDayStairStreak().forEach(day => {
+      activity.returnTwoDayStreak('flightsOfStairs').forEach(day => {
       stairContainer += `<p class="data-text"> ${day}`
     })
     stairContainer += `</div>`;
