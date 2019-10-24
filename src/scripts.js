@@ -158,7 +158,7 @@ function dropYear(dates) {
       body: JSON.stringify({
         userID: user.id,
         date: `${dateInput}`,
-        numOunces: `${ounceInput}`
+        numOunces: ${ounceInput}
       })
     })
     .then($('.hydration-submit').after('<p class="success-message">Data Submitted Successfully!</p>'))
