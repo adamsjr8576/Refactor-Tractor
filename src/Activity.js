@@ -7,20 +7,12 @@ class Activity extends UserFitness {
     this.activityData = activityData;
   }
 
-  returnNumStepsDay(date) {
-    return this.userData.find(day => day.date === date).numSteps;
-  }
-
   returnMilesWalked() {
     return Number((this.user.strideLength * this.userData[this.userData.length - 1].numSteps / 5280).toFixed(2))
   }
 
-  returnMinutesActive(date) {
-    return this.userData.find(day => day.date === date).minutesActive;
-  }
-
-  returnFlightsOfStairs(date) {
-    return this.userData.find(day => day.date === date).flightsOfStairs;
+  returnActivityDay(date, property) {
+    return this.userData.find(day => day.date === date)[property];
   }
 
 returnAverageForWeek(week, activityData) {
@@ -30,7 +22,7 @@ returnAverageForWeek(week, activityData) {
       return acc
     }, 0) / 7)
   }
-  
+
   metStepGoal(date) {
     let numSteps = this.userData.find(day => day.date === date).numSteps
     return numSteps >= this.user.dailyStepGoal
@@ -58,15 +50,6 @@ returnAverageForWeek(week, activityData) {
     }, {})
     return [stepObj, this.user.friends[totalStepsPerFriend.indexOf(Math.max(...totalStepsPerFriend))]]
   }
-
-  returnAverageForWeek(week, activityData) {
-    let weekOfData = this.returnWeekOfData(week, this.userData);
-    return Math.floor(weekOfData.reduce((acc, day) => {
-      acc += day[activityData]
-      return acc
-    }, 0) / 7)
-  }
-  
 
   returnThreeDayStreak(activityData) {
     let specificUser = this.userData.reverse();
