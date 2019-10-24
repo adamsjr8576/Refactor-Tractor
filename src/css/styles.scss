@@ -94,12 +94,12 @@ main {
   outline: 0;
   width: 30%;
     &:hover {
-    cursor: pointer;
+    // cursor: pointer;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   }
-    &:active {
-      transform: scale(1.03);
-    }
+    // &:active {
+    //   transform: scale(1.03);
+    // }
 }
 
 .data-heading {
@@ -141,6 +141,43 @@ main {
 canvas {
   @extend %border-bubble-feat;
   margin: auto;
+}
+
+#hydration-date-field, #hydration-oz-field {
+  margin: auto;
+  color: $header_color;
+  margin-top: 10px;
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#user-hydration-date, #user-hydration-oz {
+  width: 100%;
+  font-size: 1.2em;
+  padding: 5px;
+  opacity: 1;
+}
+
+.hydration-submit {
+  font-size: 1.3em;
+  color: white;
+  background-color: #01579B;
+  margin-top: 10px;
+  width: 50%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+    &:active {
+      transform: scale(.97);
+    }
+    &:focus {
+      outline: none;
+    }
+}
+
+.success-message {
+  color: $header_color;
 }
 
 .number-of-steps-goal {

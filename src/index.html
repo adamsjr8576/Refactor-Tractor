@@ -16,7 +16,7 @@
     <p class="date"></p>
   </header>
   <main id="grid">
-    <section class="data-section grid-item draggable" tabindex="1">
+    <section class="data-section grid-item draggable" tabindex="0">
       <h4 class="data-heading">Hydration</h4>
       <article class="data-article">
         <img class="img-medium" src="./images/drop.svg" alt="water droplet">
@@ -26,7 +26,26 @@
           alt="A bar chart that displays the number of ounces of water the user consumed daily, over the course of a week."></canvas>
       </article>
     </section>
-    <section class="data-section sleep grid-item draggable" tabindex="2">
+
+
+    <section class="data-section grid-item draggable" tabindex="0">
+      <h4 class="data-heading">Input Hydration Data</h4>
+      <form class="data-article">
+        <img class="img-medium" src="./images/drop.svg" alt="water droplet">
+        <div id="hydration-date-field">
+          <label class="hydration-date-input">DATE:</label><br>
+          <input id="user-hydration-date" type="text" placeholder='YYYY/MM/DD'>
+        </div>
+        <div id="hydration-oz-field">
+          <label class="hydration-oz-input">OUNCES CONSUMED:</label><br>
+          <input id="user-hydration-oz"type="number" placeholder="Number of Ounces...">
+        </div>
+        <button type="button" class="hydration-submit">SUBMIT</button>
+      </form>
+    </section>
+
+
+    <section class="data-section sleep grid-item draggable" tabindex="0">
       <h4 class="data-heading">Sleep</h4>
       <article class="data-article">
         <img class="img-medium" src="./images/moon.svg" alt="moon with stars">
@@ -42,7 +61,7 @@
         <p class="data-text" id="longest-sleepers"></p>
       </article>
     </section>
-    <section class="data-section activity grid-item draggable" tabindex="3">
+    <section class="data-section activity grid-item draggable" tabindex="0">
       <h4 class="data-heading">Activity</h4>
       <article class="data-article">
         <img class="img-medium" src="./images/stopwatch.svg" alt="road">
@@ -117,14 +136,14 @@
         <p class="data-text" id="most-active"></p>
       </article>
     </section>
-    <section class="data-section grid-item draggable" tabindex="4">
+    <section class="data-section grid-item draggable" tabindex="0">
       <h4 class="data-heading">Friends</h4>
       <article class="data-article">
       <img class="img-medium" src="./images/team.svg" alt="hands in">
       <p class="subtext" id="friends-step">Weekly Steps</p>
       </article>
     </section>
-    <section class="data-section grid-item draggable" tabindex="5">
+    <section class="data-section grid-item draggable" tabindex="0">
       <h4 class="data-heading">Challenges</h4>
       <article class="data-article">
         <h4 class="data-text" id="increase-step-header">3 Day Step Streak</h4>
