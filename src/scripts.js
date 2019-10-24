@@ -8,11 +8,6 @@ import SleepRepo from "./SleepRepo";
 import Activity from "./Activity";
 import ActivityRepo from "./ActivityRepo";
 
-import activityData from "../data/activity";
-import allSleepData from "../data/sleep";
-import userData from "../data/users";
-import hydrationData from "../data/hydration";
-
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.scss';
 import './css/normalize.scss';
@@ -32,31 +27,50 @@ import './images/team.svg'
 
 var Packery = require('packery');
 
+function getData(type) {
+	const root = 'https://fe-apps.herokuapp.com/api/v1/fitlit/1908/';
+	const url = `${root}${type}`;
+	const promise = fetch(url)
+	                .then(data => data.json());
+	return promise;
+}
+
+getData('users/userData').then(function(userData) {
+
 //Generate random user
 const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
 //Repo variables
-const userRepo = new UserRepo(userData);
-const sleepRepo = new SleepRepo(allSleepData);
-const activityRepo = new ActivityRepo(activityData, userData);
+const userRepo = new UserRepo(userData.userData);
 
 //Individual Class Repos
-const user = new User(userData[uniqueUserIndex]);
-const hydration = new Hydration(hydrationData, user);
-const sleep = new Sleep(allSleepData, user);
-const activity = new Activity(activityData, user);
+const user = new User(userData.userData[uniqueUserIndex]);
 
-//Date
-const date = activityData.reverse()[0].date;
-const dateObject = new Date(date);
-const options = {
-  weekday: 'long',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric'
-};
+function formatDate(date) {
+  var monthNames = [
+    "1", "2", "3",
+    "4", "5", "6", "7",
+    "8", "9", "10",
+    "11", "12"
+  ];
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+  return year + '/' + monthNames[monthIndex] + '/' + day;
+}
 
-const formattedDate = dateObject.toLocaleString('en', options)
+	const date = formatDate(new Date());
+	const dateObject = new Date(date);
+	const options = {
+		weekday: 'long',
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric'
+	}
+
+	const formattedDate = dateObject.toLocaleString('en', options);
+
+	$('.date').text(`${formattedDate}`);
 
 function dropYear(dates) {
   const reformattedDates = dates.map(date => {
@@ -75,8 +89,6 @@ function dropYear(dates) {
     gutter: 10,
 });
 
-
-
   // let $grid = $('#grid').packery({
   //   itemSelector: 'grid-item',
   //   columnWidth: 30,
@@ -93,27 +105,26 @@ function dropYear(dates) {
   //   pckry('bindDraggabillyEvents', draggie)
   // });
 
-
   // Function to find user name
   function findUserName(id) {
-    return userData.find(user => user.id === id).name;
+    return userRepo.data.find(user => user.id === id).name;
   }
 
   //User Section
   $('#username').text(`${user.returnUserName()}`)
 
-  //Date Section
-  $('.date').text(`${formattedDate}`);
+//Hydration
+getData('hydration/hydrationData').then(function(hydrationData) {
+  const hydration = new Hydration(hydrationData.hydrationData, user);
 
-  //Hydration
   $('#water-consumed').text(`${hydration.returnDailyFluidOunces(date)} Ounces \n\n`);
 
   const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
     type: 'horizontalBar',
     data: {
-      labels: dropYear(hydration.returnWeek()),
+      labels: dropYear(hydration.returnWeek(date)),
       datasets: [{
-        data: hydration.returnWeeklyNumOunces(),
+        data: hydration.returnWeeklyNumOunces(date),
         backgroundColor: [
           'rgba(92, 117, 218, 0.9)',
           'rgba(242, 188, 51, 0.9)',
@@ -121,7 +132,8 @@ function dropYear(dates) {
           'rgba(92, 117, 218, 0.9)',
           'rgba(242, 188, 51, 0.9)',
           'rgba(126, 221, 255, 0.9)',
-          'rgba(92, 117, 218, 0.9)'
+          'rgba(92, 117, 218, 0.9)',
+					'rgba(242, 188, 51, 0.9)'
         ],
       }]
     },
@@ -142,6 +154,7 @@ function dropYear(dates) {
       }
     }
   });
+});
 
   //User Hydration Input
   $('.hydration-submit').click(hydrationHandler);
@@ -173,35 +186,39 @@ function dropYear(dates) {
   }
 
   //Sleep
+getData('sleep/sleepData').then(function(sleepData) {
+  const sleepRepo = new SleepRepo(sleepData.sleepData);
+  const sleep = new Sleep(sleepData.sleepData, user);
+
   $('#hours-slept-day').text(`${sleep.returnSleepInfo(date, 'hoursSlept')} Hours | ${sleep.returnSleepInfo(date, 'sleepQuality')} Quality`);
 
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
     data: {
-      labels: dropYear(sleep.returnWeek(1)),
+      labels: dropYear(sleep.returnWeek(date)),
       datasets: [{
-        data: sleep.returnWeekOfSleepInfo(1, 'hoursSlept'),
+        data: sleep.returnWeekOfSleepInfo(date, 'hoursSlept'),
         label: "Sleep Hours",
         borderColor: "rgba(92, 117, 218, 0.9)",
         fill: false,
         lineTension: 0.1
       },
       {
-        data: Array(7).fill(sleep.returnAvgSleepInfo('hoursSlept')),
+        data: Array(8).fill(sleep.returnAvgSleepInfo('hoursSlept')),
         label: "Average Hours of Sleep",
         borderColor: "rgba(92, 117, 218, 0.9)",
         fill: false,
         borderDash: [10, 5]
       },
       {
-        data: sleep.returnWeekOfSleepInfo(1, 'sleepQuality'),
+        data: sleep.returnWeekOfSleepInfo(date, 'sleepQuality'),
         label: "Quality of Sleep",
         borderColor: "rgba(242, 188, 51, 0.9)",
         fill: false,
         lineTension: 0.1
       },
       {
-        data: Array(7).fill(sleep.returnAvgSleepInfo('sleepQuality')),
+        data: Array(8).fill(sleep.returnAvgSleepInfo('sleepQuality')),
         label: "Average Quality of Sleep",
         borderColor: "rgba(242, 188, 51, 0.9)",
         fill: false,
@@ -248,10 +265,13 @@ function dropYear(dates) {
       }
     }
   });
-
-  $('#longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(1)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(1)[0]} Hours`);
+  $('#longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(date)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(date)[0]} Hours`);
+});
 
   //Activity Section
+getData('activity/activityData').then(function(activityData) {
+  const activityRepo = new ActivityRepo(activityData.activityData, userRepo.data);
+  const activity = new Activity(activityData.activityData, user);
 
   var bar = new ProgressBar.Circle('#number-of-steps-day', {
     color: '#aaa',
@@ -301,9 +321,9 @@ function dropYear(dates) {
   $('#average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
   $('#distance-in-miles').text(`${activity.returnMilesWalked()} Miles`);
   $('#most-active').text(`${activityRepo.returnMostActive()[0]}: ${activityRepo.returnMostActive()[1]} Minutes`);
-  $('#week-review-minutes').text(`${activity.returnAverageForWeek(1, 'minutesActive')} Minutes Active`);
-  $('#week-review-steps').text(`${activity.returnAverageForWeek(1, 'numSteps')} Number of steps`);
-  $('#week-review-stairs').text(`${activity.returnAverageForWeek(1, 'flightsOfStairs')} flightsOfStairs`);
+  $('#week-review-minutes').text(`${activity.returnAverageForWeek(date, 'minutesActive')} Minutes Active`);
+  $('#week-review-steps').text(`${activity.returnAverageForWeek(date, 'numSteps')} Number of steps`);
+  $('#week-review-stairs').text(`${activity.returnAverageForWeek(date, 'flightsOfStairs')} flightsOfStairs`);
 
   // Friends
 
@@ -346,3 +366,6 @@ function dropYear(dates) {
   }
 
   $('#increasing-stairs-container').after(`${insertStairStreak()}`);
+
+  });
+});
