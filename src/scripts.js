@@ -144,6 +144,33 @@ console.log('ready')
     }
   });
 
+  //User Hydration Input
+  $('.hydration-submit').click(hydrationHandler);
+
+  function hydrationHandler() {
+    let dateInput = $('#user-hydration-date').val();
+    let ounceInput = Number($('#user-hydration-oz').val());
+
+    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userID: user.id,
+        date: `${dateInput}`,
+        numOunces: `${ounceInput}`
+      })
+    })
+    .then($('.hydration-submit').after('<p class="success-message">Data Submitted Successfully!</p>'))
+    .catch();
+    setTimeout(clearField, 1600);
+  }
+
+  function clearField() {
+    $('.success-message').css('display', 'none')
+  }
+
   //Sleep
   $('#hours-slept-day').text(`${sleep.returnSleepInfo(date, 'hoursSlept')} Hours | ${sleep.returnSleepInfo(date, 'sleepQuality')} Quality`);
 
