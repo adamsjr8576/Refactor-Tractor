@@ -7,43 +7,19 @@ class Activity extends UserFitness {
     this.activityData = activityData;
   }
 
-  returnNumStepsDay(date) {
-    return this.userData.find(day => day.date === date).numSteps;
-  }
-
   returnMilesWalked() {
     return Number((this.user.strideLength * this.userData[this.userData.length - 1].numSteps / 5280).toFixed(2))
   }
 
-  returnMinutesActive(date) {
-    return this.userData.find(day => day.date === date).minutesActive;
+  returnActivityDay(date, property) {
+    return this.userData.find(day => day.date === date)[property];
   }
 
-  returnFlightsOfStairs(date) {
-    return this.userData.find(day => day.date === date).flightsOfStairs;
-  }
-
-  returnAverageMinutesActiveForWeek(week) {
+returnAverageForWeek(week, activityData) {
     let weekOfData = this.returnWeekOfData(week, this.userData);
-    return Math.floor(weekOfData.reduce((totalMinutes, eachDay) => {
-      totalMinutes += eachDay.minutesActive
-      return totalMinutes
-    }, 0) / 7)
-  }
-
-  returnAverageStepsForWeek(week) {
-    let weekOfData = this.returnWeekOfData(week, this.userData);
-    return Math.floor(weekOfData.reduce((totalSteps, eachDay) => {
-      totalSteps += eachDay.numSteps
-      return totalSteps
-    }, 0) / 7)
-  }
-
-  returnAverageStairsForWeek(week) {
-    let weekOfData = this.returnWeekOfData(week, this.userData);
-    return Math.floor(weekOfData.reduce((totalStairs, eachDay) => {
-      totalStairs += eachDay.flightsOfStairs
-      return totalStairs
+    return Math.floor(weekOfData.reduce((acc, day) => {
+      acc += day[activityData]
+      return acc
     }, 0) / 7)
   }
 
@@ -75,11 +51,11 @@ class Activity extends UserFitness {
     return [stepObj, this.user.friends[totalStepsPerFriend.indexOf(Math.max(...totalStepsPerFriend))]]
   }
 
-  returnThreeDayStepStreak() {
+  returnThreeDayStreak(activityData) {
     let specificUser = this.userData.reverse();
     let dates = [];
     specificUser.some((user, i, specificUser) => {
-      if (specificUser[i].numSteps < specificUser[i + 1].numSteps && specificUser[i + 1].numSteps < specificUser[i + 2].numSteps) {
+      if (specificUser[i][activityData] < specificUser[i + 1][activityData] && specificUser[i + 1][activityData] < specificUser[i + 2][activityData]) {
         dates.push(specificUser[i].date);
         dates.push(specificUser[i + 1].date);
         dates.push(specificUser[i + 2].date);
@@ -90,11 +66,11 @@ class Activity extends UserFitness {
     return dates;
   }
 
-  returnTwoDayStairStreak() {
+  returnTwoDayStreak(activityData) {
     var specificUser = this.userData.reverse();
     let dates = [];
     specificUser.some((user, i, specificUser) => {
-      if (specificUser[i].flightsOfStairs > specificUser[i + 1].flightsOfStairs) {
+      if (specificUser[i][activityData] > specificUser[i + 1][activityData]) {
         dates.push(specificUser[i].date);
         dates.push(specificUser[i + 1].date);
       }

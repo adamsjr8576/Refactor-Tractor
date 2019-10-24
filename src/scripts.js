@@ -75,7 +75,7 @@ function dropYear(dates) {
     gutter: 10,
 });
 
-  
+
 
   // let $grid = $('#grid').packery({
   //   itemSelector: 'grid-item',
@@ -254,27 +254,27 @@ function dropYear(dates) {
       if (value === 0) {
         circle.setText('');
       } else {
-        circle.setText(`${activity.returnNumStepsDay(date)} steps`);
+        circle.setText(`${activity.returnActivityDay(date, 'numSteps')} steps`);
       }
     }
   });
 
-  let percentSteps = activity.returnNumStepsDay(date) / user.dailyStepGoal;
+  let percentSteps = activity.returnActivityDay(date, 'numSteps') / user.dailyStepGoal;
   bar.animate(percentSteps > 1 ? percentSteps = 1 : percentSteps); // Number from 0.0 to 1.0
 
   $('#number-of-steps-goal').text(`${user.dailyStepGoal}`);
   $('#avg-number-of-steps-goal').text(`${userRepo.returnAverageStepGoal()}`);
-  $('#number-of-minutes-active-day').text(`${activity.returnMinutesActive(date)}`);
+  $('#number-of-minutes-active-day').text(`${activity.returnActivityDay(date, 'minutesActive')}`);
   $('#average-minutes-active').text(`${activityRepo.returnAverage(date, 'minutesActive')}`)
-  $('#distance').text(`${activity.returnNumStepsDay(date)}`);
+  $('#distance').text(`${activity.returnActivityDay(date, 'numSteps')}`);
   $('#average-distance').text(`${activityRepo.returnAverage(date, 'numSteps')}`)
-  $('#stairs').text(`${activity.returnFlightsOfStairs(date)}`);
+  $('#stairs').text(`${activity.returnActivityDay(date, 'flightsOfStairs')}`);
   $('#average-stairs').text(`${activityRepo.returnAverage(date, 'flightsOfStairs')}`)
   $('#distance-in-miles').text(`${activity.returnMilesWalked()} Miles`);
   $('#most-active').text(`${activityRepo.returnMostActive()[0]}: ${activityRepo.returnMostActive()[1]} Minutes`);
-  $('#week-review-minutes').text(`${activity.returnAverageMinutesActiveForWeek(1)} Minutes Active`);
-  $('#week-review-steps').text(`${activity.returnAverageStepsForWeek(1)} Steps Taken`);
-  $('#week-review-stairs').text(`${activity.returnAverageStairsForWeek(1)} Flights of Stairs`);
+  $('#week-review-minutes').text(`${activity.returnAverageForWeek(1, 'minutesActive')} Minutes Active`);
+  $('#week-review-steps').text(`${activity.returnAverageForWeek(1, 'numSteps')} Number of steps`);
+  $('#week-review-stairs').text(`${activity.returnAverageForWeek(1, 'flightsOfStairs')} flightsOfStairs`);
 
   // Friends
 
@@ -298,7 +298,7 @@ function dropYear(dates) {
 
   function insertStepStreak() {
     let stepContainer = `<div class="border-bubble">`;
-    activity.returnThreeDayStepStreak().forEach(day => {
+    activity.returnThreeDayStreak('numSteps').forEach(day => {
       stepContainer += `<p class="data-text"> ${day}</p>`;
     });
     stepContainer += `</div>`;
@@ -309,7 +309,7 @@ function dropYear(dates) {
 
   function insertStairStreak() {
     let stairContainer = `<div class="border-bubble">`;
-    activity.returnTwoDayStairStreak().forEach(day => {
+      activity.returnTwoDayStreak('flightsOfStairs').forEach(day => {
       stairContainer += `<p class="data-text"> ${day}`
     })
     stairContainer += `</div>`;
@@ -317,4 +317,3 @@ function dropYear(dates) {
   }
 
   $('#increasing-stairs-container').after(`${insertStairStreak()}`);
-
