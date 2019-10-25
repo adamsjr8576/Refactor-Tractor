@@ -10,7 +10,7 @@ class SleepRepo {
     }, 0) / this.sleepData.length).toFixed(1));
   }
 
-  returnAboveAverageSleepers(week) {
+  returnAboveAverageSleepers(date) {
     let dataByUser = this.sleepData.reduce((arr, user) => {
       if (!arr[user.userID - 1]) {
         arr[user.userID - 1] = [user];
@@ -19,8 +19,9 @@ class SleepRepo {
       }
       return arr;
     }, []);
-
-    let avgSleepQualityPerUser = dataByUser.map(user => [...user].splice(-7 * week, 7)).map(user => user.reduce((totalQuality, day) => {
+    let dataDate = dataByUser[0].map(data => data.date);
+    let dateIndex = dataDate.lastIndexOf(date);
+    let avgSleepQualityPerUser = dataByUser.map(user => [...user].splice(dateIndex - 7, 7)).map(user => user.reduce((totalQuality, day) => {
       totalQuality += day.sleepQuality;
       return totalQuality;
     }, 0)).map(user => Number((user / 7).toFixed(2)));
@@ -40,7 +41,9 @@ class SleepRepo {
     return sortedSleepers.filter(day => day.hoursSlept === sortedSleepers[0].hoursSlept).map(user => user.userID);
   }
 
-  returnWeeklyLongestSleepers(week) {
+  returnWeeklyLongestSleepers(date) {
+    this.sleepData.splice(-5, 5);
+
     let dataByUser = this.sleepData.reduce((arr, user) => {
       if (!arr[user.userID - 1]) {
         arr[user.userID - 1] = [user];
@@ -49,12 +52,13 @@ class SleepRepo {
       }
       return arr;
     }, []);
-
-    let avgSleepHoursPerUser = dataByUser.map(user => [...user].splice(-7 * week, 7)).map(user => user.reduce((totalHours, day) => {
+    let dataDate = dataByUser[0].map(data => data.date);
+    let dateIndex = dataDate.lastIndexOf(date);
+    let avgSleepHoursPerUser = dataByUser.map(user => [...user].splice(dateIndex - 7, 7)).map(user => user.reduce((totalHours, day) => {
       totalHours += day.hoursSlept;
       return totalHours;
     }, 0));
-    return [Math.max(...avgSleepHoursPerUser), avgSleepHoursPerUser.indexOf(Math.max(...avgSleepHoursPerUser)) + 1];
+    return [Math.round(Math.max(...avgSleepHoursPerUser)), avgSleepHoursPerUser.indexOf(Math.max(...avgSleepHoursPerUser)) + 1];
   }
 }
 

@@ -16,8 +16,8 @@ class Sleep extends UserFitness {
     return this.userData.find(day => day.date === date)[sleepInfo];
   }
 
-  returnWeekOfSleepInfo(week, sleepInfo) {
-    return this.returnWeekOfData(week, this.userData).map(day => day[sleepInfo]);
+  returnWeekOfSleepInfo(date, sleepInfo) {
+    return this.returnWeekOfData(date, this.userData).map(day => day[sleepInfo]);
   }
 }
 

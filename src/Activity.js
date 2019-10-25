@@ -15,8 +15,8 @@ class Activity extends UserFitness {
     return this.userData.find(day => day.date === date)[property];
   }
 
-returnAverageForWeek(week, activityData) {
-    let weekOfData = this.returnWeekOfData(week, this.userData);
+returnAverageForWeek(date, activityData) {
+    let weekOfData = this.returnWeekOfData(date, this.userData);
     return Math.floor(weekOfData.reduce((acc, day) => {
       acc += day[activityData]
       return acc
