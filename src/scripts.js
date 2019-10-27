@@ -59,7 +59,7 @@ function formatDate(date) {
   return year + '/' + monthNames[monthIndex] + '/' + day;
 }
 
-	const date = formatDate(new Date());
+  const date = formatDate(new Date());
 	const dateObject = new Date(date);
 	const options = {
 		weekday: 'long',
@@ -160,7 +160,7 @@ getData('hydration/hydrationData').then(function(hydrationData) {
   $('.hydration-submit').click(hydrationHandler);
 
   function hydrationHandler() {
-    let dateInput = $('#user-hydration-date').val();
+    // let dateInput = $('#user-hydration-date').val();
     let ounceInput = Number($('#user-hydration-oz').val());
 
     fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
@@ -170,7 +170,7 @@ getData('hydration/hydrationData').then(function(hydrationData) {
       },
       body: JSON.stringify({
         userID: user.id,
-        date: `${dateInput}`,
+        date: date,
         numOunces: ounceInput
       })
     })
