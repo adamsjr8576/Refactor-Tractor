@@ -26,6 +26,9 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+    &:hover {
+      background-color: rgb(4, 116, 201);
+    }
     &:active {
       transform: scale(.97);
     }
@@ -197,6 +200,10 @@ canvas {
 
 .success-message {
   color: $header_color;
+}
+
+.failure-message {
+  color: red;
 }
 
 .number-of-steps-goal {

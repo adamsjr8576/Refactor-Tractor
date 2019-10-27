@@ -176,7 +176,7 @@ getData('hydration/hydrationData').then(function(hydrationData) {
     .then(response => response.json())
     .then(data => $('#water-consumed').text(`${data.numOunces} Ounces \n\n`))
     .then($('.hydration-submit').after('<p class="success-message">Data Submitted Successfully!</p>'))
-    .catch();
+    .catch($('.hydration-submit').after('<p class="failure-message">Input Correct Data!</p>'));
     $('#user-hydration-oz').val('');
     setTimeout(clearField, 1600);
   }
@@ -267,6 +267,34 @@ getData('sleep/sleepData').then(function(sleepData) {
   });
   $('#longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(date)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(date)[0]} Hours`);
 });
+
+//User Sleep Input
+$('.sleep-submit').click(sleepHandler);
+
+  function sleepHandler() {
+    let hoursInput = Number($('#user-sleep-hours').val());
+    let qualityInput = Number($('#user-sleep-quality').val())
+
+    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userID: user.id,
+        date: date,
+        hoursSlept: hoursInput,
+        sleepQuality: qualityInput
+      })
+    })
+    .then(response => response.json())
+    .then(data => $('#hours-slept-day').text(`${data.hoursSlept} Hours | ${data.sleepQuality} Quality`))
+    .then($('.sleep-submit').after('<p class="success-message">Data Submitted Successfully!</p>'))
+    .catch($('.sleep-submit').after('<p class="failure-message">Input Correct Data!</p>'));
+    $('#user-sleep-hours').val('');
+    $('#user-sleep-quality').val('');
+    setTimeout(clearField, 1600);
+  }
 
   //Activity Section
 getData('activity/activityData').then(function(activityData) {
