@@ -51,6 +51,20 @@ returnAverageForWeek(week, activityData) {
     return [stepObj, this.user.friends[totalStepsPerFriend.indexOf(Math.max(...totalStepsPerFriend))]]
   }
 
+  returnFriendsStairsCount() {
+    let friends = this.user.friends.map(friend => this.activityData.filter(el => el.userID === friend));
+    let friendDataForDates = friends.map(friend => [...friend].splice(-7));
+    let totalStairsPerFriend = friendDataForDates.map(friend => friend.reduce((totalStairs, day) => {
+      totalStairs += day.flightsOfStairs
+      return totalStairs
+    }, 0));
+    var stairObj = this.user.friends.reduce((friendStairs, friend, index) => {
+      friendStairs[friend] = totalStairsPerFriend[index];
+      return friendStairs
+    }, {})
+    return this.user.friends[totalStairsPerFriend.indexOf(Math.max(...totalStairsPerFriend))]
+  }
+
   returnThreeDayStreak(activityData) {
     let specificUser = this.userData.reverse();
     let dates = [];
