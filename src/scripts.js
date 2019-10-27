@@ -160,7 +160,6 @@ getData('hydration/hydrationData').then(function(hydrationData) {
   $('.hydration-submit').click(hydrationHandler);
 
   function hydrationHandler() {
-    // let dateInput = $('#user-hydration-date').val();
     let ounceInput = Number($('#user-hydration-oz').val());
 
     fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
