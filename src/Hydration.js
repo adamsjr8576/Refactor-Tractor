@@ -20,7 +20,6 @@ class Hydration extends UserFitness {
     let dataDate = this.userData.map(data => data.date);
     let dateIndex = dataDate.lastIndexOf(date);
     return this.userData.slice(dateIndex - 7, dateIndex + 1).map(day => day.numOunces);
-    // return this.userData.slice(-7).map(day => day.numOunces);
   }
 }
 

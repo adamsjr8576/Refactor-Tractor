@@ -173,9 +173,11 @@ getData('hydration/hydrationData').then(function(hydrationData) {
         numOunces: ounceInput
       })
     })
+    .then(response => response.json())
+    .then(data => $('#water-consumed').text(`${data.numOunces} Ounces \n\n`))
+    .then()
     .then($('.hydration-submit').after('<p class="success-message">Data Submitted Successfully!</p>'))
     .catch();
-    $('#user-hydration-date').val('');
     $('#user-hydration-oz').val('');
     setTimeout(clearField, 1600);
   }
