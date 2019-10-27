@@ -175,7 +175,6 @@ getData('hydration/hydrationData').then(function(hydrationData) {
     })
     .then(response => response.json())
     .then(data => $('#water-consumed').text(`${data.numOunces} Ounces \n\n`))
-    .then()
     .then($('.hydration-submit').after('<p class="success-message">Data Submitted Successfully!</p>'))
     .catch();
     $('#user-hydration-oz').val('');
