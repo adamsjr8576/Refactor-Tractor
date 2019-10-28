@@ -186,6 +186,7 @@ canvas {
 
 ul {
   list-style: none;
+  margin-left: -9%;
 }
 
 .side-by-side-container {
@@ -205,7 +206,7 @@ ul {
 .border-bottom {
   padding: 5px;
   border-bottom: $border;
-  width: 65%;
+  width: 83%;
 }
 
 .number-of-steps-day {
@@ -223,4 +224,32 @@ ul {
   font-size: $font_size_small;
   color: white;
 }
+
+.grid-item:hover {
+  border-color: hsla(0, 0%, 100%, 0.5);
+  cursor: move;
+}
+
+.friend-icon-container {
+  height: 100%;
+  background: #ffffff;
+  padding: 5%;
+  width: 100%;
+}
+
+.friend-button {
+  background-color: #039BE5;
+  border-radius: 50%;
+  border: none;
+  color: #ffffff;
+  height: 55px;
+  width: 55px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2.25%;
+}
+
+
 
