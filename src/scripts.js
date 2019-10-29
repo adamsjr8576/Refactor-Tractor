@@ -145,7 +145,7 @@ getData('hydration/hydrationData').then(function(hydrationData) {
   });
 
   //User Hydration Input
-  $('.hydration-submit').click(hydrationHandler);
+  $('#hydration-input-button').click(hydrationHandler);
 
   function hydrationHandler() {
     let ounceInput = Number($('#user-hydration-oz').val());
@@ -163,13 +163,13 @@ getData('hydration/hydrationData').then(function(hydrationData) {
     })
     .then(response => response.json())
     .then(data => $('#water-consumed').text(`${data.numOunces} Ounces \n\n`))
-    .then($('.hydration-submit').after('<p class="success-message">Data Submitted Successfully!</p>'))
-    .catch($('.hydration-submit').after('<p class="failure-message">Input Correct Data!</p>'));
+    .then($('#hydration-input-button').before('<p class="success-message">Data Submitted Successfully!</p>'))
+    .catch($('#hydration-input-button').before('<p class="failure-message">Input Correct Data!</p>'));
     $('#user-hydration-oz').val('');
     setTimeout(clearField, 1600);
   }
 
- 
+
 
 	function insertFriendHydro() {
 		let userIDs = user.friends;
@@ -297,7 +297,7 @@ getData('sleep/sleepData').then(function(sleepData) {
 });
 
 //User Sleep Input
-$('.sleep-submit').click(sleepHandler);
+$('#sleep-input-button').click(sleepHandler);
 
   function sleepHandler() {
     let hoursInput = Number($('#user-sleep-hours').val());
@@ -317,8 +317,8 @@ $('.sleep-submit').click(sleepHandler);
     })
     .then(response => response.json())
     .then(data => $('#hours-slept-day').text(`${data.hoursSlept} Hours | ${data.sleepQuality} Quality`))
-    .then($('.sleep-submit').after('<p class="success-message">Data Submitted Successfully!</p>'))
-    .catch($('.sleep-submit').after('<p class="failure-message">Input Correct Data!</p>'));
+    .then($('#sleep-input-button').before('<p class="success-message">Data Submitted Successfully!</p>'))
+    .catch($('#sleep-input-button').before('<p class="failure-message">Input Correct Data!</p>'));
     $('#user-sleep-hours').val('');
     $('#user-sleep-quality').val('');
     setTimeout(clearField, 1600);
@@ -380,6 +380,39 @@ getData('activity/activityData').then(function(activityData) {
   $('#week-review-minutes').text(`${activity.returnAverageForWeek(date, 'minutesActive')} Minutes Active`);
   $('#week-review-steps').text(`${activity.returnAverageForWeek(date, 'numSteps')} Number of steps`);
   $('#week-review-stairs').text(`${activity.returnAverageForWeek(date, 'flightsOfStairs')} flightsOfStairs`);
+
+$("#activity-input-button").click(activityHandler);
+
+function activityHandler() {
+	let stepsInput = Number($("#user-steps").val());
+	let flightOfStairsInput = Number($("#user-stairs").val());
+	let minutesActiveInput = Number($("#user-minutes").val());
+
+	fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			userID: user.id,
+			date: date,
+			numSteps: stepsInput,
+			minutesActive: minutesActiveInput,
+			flightsOfStairs: flightOfStairsInput
+		})
+	})
+	.then(response => response.json())
+	.then(data => {$("#number-of-minutes-active-day").text(`${data.minutesActive}`)
+								$("#distance").text(`${data.numSteps}`)
+								$("#stairs").text(`${data.flightsOfStairs}`)
+	})
+	.then(data => {$("#activity-input-button").before('<p class="success-message">Data Submitted Successfully!</p>')})
+	.catch($("#activity-input-button").before('<p class="failure-message">Input Correct Data!</p>'));
+	$("#user-steps").val('');
+	$("#user-stairs").val('');
+	$("#user-minutes").val('');
+	setTimeout(clearField, 1600);
+}
 
   // Friends
 
