@@ -51,6 +51,25 @@
         <p class="data-text" id="longest-sleepers"></p>
       </article>
     </section>
+
+
+    <section class="data-section grid-item draggable" tabindex="0">
+        <h4 class="data-heading">Update Last Night's Sleep Data</h4>
+        <form class="data-article">
+          <img class="img-medium" src="./images/moon.svg" alt="moon with stars">
+          <div id="sleep-hours-field">
+              <label class="sleep-hours-input" for="user-sleep-hours">HOURS SLEPT:</label><br>
+              <input id="user-sleep-hours"type="number" placeholder="Hours Slept...">
+          </div>
+          <div id="sleep-quality-field">
+            <label class="sleep-hours-input" for="user-sleep-quality">SLEEP QUALITY:</label><br>
+            <input id="user-sleep-quality" type="number" min="0" max="15" placeholder="Sleep Quality between 0-5">
+          </div>
+          <button type="button" class="sleep-submit">SUBMIT</button>
+        </form>
+      </section>
+
+
     <section class="data-section activity grid-item draggable" tabindex="0">
       <h4 class="data-heading">Activity</h4>
       <article class="data-article">
