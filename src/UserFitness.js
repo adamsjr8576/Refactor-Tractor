@@ -9,7 +9,7 @@ class UserFitness {
 
   returnWeekOfData(date) {
     let dataDate = this.userData.map(data => data.date);
-    let dateIndex = dataDate.lastIndexOf(date);
+    let dateIndex = dataDate.indexOf(date);
     let weekData = this.userData.slice(dateIndex - 7, dateIndex + 1);
     return weekData;
   }
@@ -20,7 +20,7 @@ class UserFitness {
 
   returnAvgInfo(property) {
     return Number((this.userData.reduce((acc, day) => {
-      acc += day[property];
+      acc += Number(day[property]);
       return acc;
     }, 0) / this.userData.length).toFixed(2));
   };

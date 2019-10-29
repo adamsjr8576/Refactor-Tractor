@@ -197,7 +197,6 @@ getData('sleep/sleepData').then(function(sleepData) {
   const sleep = new Sleep(sleepData.sleepData, user);
 
   $('#hours-slept-day').text(`${sleep.returnSleepInfo(date, 'hoursSlept')} Hours | ${sleep.returnSleepInfo(date, 'sleepQuality')} Quality`);
-
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
     data: {
@@ -278,11 +277,11 @@ getData('sleep/sleepData').then(function(sleepData) {
 		let list = `<ul class="friends_ul">`
 			userIDs.forEach(userID => {
 				let userName = findUserName(userID);
-				const user = new User(userData.userData[userID]);
-				const sleep = new Sleep(sleepData.sleepData, user);
+				const userFriend = new User(userData.userData[userID]);
+				const sleepFriend = new Sleep(sleepData.sleepData, userFriend);
 				list += `<li class="friends_li">
 						 <p class="data-text"><b>${userName}</b>:</p>
-						 <p class="data-text border-bottom">${sleep.returnAvgInfo('sleepQuality')} Sleep Quality</p>`;
+						 <p class="data-text border-bottom">${sleepFriend.returnAvgInfo('sleepQuality')} Sleep Quality</p>`;
 			});
 			list += `</ul>`;
 			return list;
