@@ -407,7 +407,6 @@ function activityHandler() {
 	let stepsInput = Number($("#user-steps").val());
 	let flightOfStairsInput = Number($("#user-stairs").val());
 	let minutesActiveInput = Number($("#user-minutes").val());
-
 	fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
 		method: 'POST',
 		headers: {
