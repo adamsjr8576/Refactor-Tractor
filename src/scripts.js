@@ -35,6 +35,11 @@ function getData(type) {
 	return promise;
 }
 
+function clearField() {
+  $('.success-message').css('display', 'none')
+  $('.failure-message').css('display', 'none')
+}
+
 getData('users/userData').then(function(userData) {
 
 //Generate random user
@@ -164,10 +169,7 @@ getData('hydration/hydrationData').then(function(hydrationData) {
     setTimeout(clearField, 1600);
   }
 
-  function clearField() {
-    $('.success-message').css('display', 'none')
-    $('.failure-message').css('display', 'none')
-  }
+ 
 
 	function insertFriendHydro() {
 		let userIDs = user.friends;
