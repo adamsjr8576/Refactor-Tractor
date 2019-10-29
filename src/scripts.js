@@ -196,7 +196,6 @@ getData('sleep/sleepData').then(function(sleepData) {
   const sleep = new Sleep(sleepData.sleepData, user);
 
   $('#hours-slept-day').text(`${sleep.returnSleepInfo(date, 'hoursSlept')} Hours | ${sleep.returnSleepInfo(date, 'sleepQuality')} Quality`);
-console.log(sleep.returnWeek(date));
   const weeklySleepChart = new Chart(document.getElementById('sleep-week').getContext('2d'), {
     type: 'line',
     data: {

@@ -11,7 +11,6 @@ class UserFitness {
     let dataDate = this.userData.map(data => data.date);
     let dateIndex = dataDate.indexOf(date);
     let weekData = this.userData.slice(dateIndex - 7, dateIndex + 1);
-    console.log("weekDate: ", weekData);
     return weekData;
   }
 
