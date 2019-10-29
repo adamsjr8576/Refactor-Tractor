@@ -1,0 +1,35 @@
+@mixin inputFields {
+  margin: auto;
+  color: $header_color;
+  margin-top: 10px;
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+@mixin inputBoxes {
+  width: 100%;
+  font-size: 1.2em;
+  padding: 5px;
+  opacity: 1;
+}
+
+@mixin submitButtons {
+  font-size: 1.3em;
+  color: white;
+  background-color: #01579B;
+  margin-top: 10px;
+  width: 50%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+    &:hover {
+      background-color: rgb(4, 116, 201);
+    }
+    &:active {
+      transform: scale(.97);
+    }
+    &:focus {
+      outline: none;
+    }
+}
