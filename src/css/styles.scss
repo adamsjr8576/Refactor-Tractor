@@ -259,13 +259,9 @@ ul {
 }
 
 .friend-button {
-  background-color: $header_color;
-  border-radius: 50%;
-  border: none;
-  color: #ffffff;
-  height: 65px;
-  width: 65px;
+  @include submitButtons;
+  margin: 0px 3%;
+  padding: 3%;
   text-align: center;
-  font-size: $font_size_small;
-  cursor: pointer;
+  font-size: $font_size_xsmall;
 }
