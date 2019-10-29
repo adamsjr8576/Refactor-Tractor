@@ -12,12 +12,18 @@ class UserFitness {
     let dateIndex = dataDate.lastIndexOf(date);
     let weekData = this.userData.slice(dateIndex - 7, dateIndex + 1);
     return weekData;
-    // return [...this.userData].splice((-7 * week), 7);
   }
 
   returnWeek(date) {
     return this.returnWeekOfData(date).map(day => day.date);
   }
+
+  returnAvgInfo(property) {
+    return Number((this.userData.reduce((acc, day) => {
+      acc += day[property];
+      return acc;
+    }, 0) / this.userData.length).toFixed(2));
+  };
 
 }
 

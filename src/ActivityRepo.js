@@ -7,7 +7,7 @@ class ActivityRepo {
   returnAverage(date, property) {
     let amountPerDay = this.activityData.filter(day => day.date === date);
     return Number((amountPerDay.reduce((total, day) => {
-      total += day[property];
+      total += Number(day[property]);
       return total;
     }, 0) / amountPerDay.length).toFixed(0));
   }
