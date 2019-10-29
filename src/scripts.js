@@ -315,10 +315,20 @@ $('#sleep-input-button').click(sleepHandler);
         sleepQuality: qualityInput
       })
     })
-    .then(response => response.json())
-    .then(data => $('#hours-slept-day').text(`${data.hoursSlept} Hours | ${data.sleepQuality} Quality`))
-    .then($('#sleep-input-button').before('<p class="success-message">Data Submitted Successfully!</p>'))
-    .catch($('#sleep-input-button').before('<p class="failure-message">Input Correct Data!</p>'));
+    .then(response => {
+			if (response.ok) {
+				$('#sleep-input-button').before('<p class="success-message">Data Submitted Successfully!</p>')
+				return response.json();
+			} else {
+				return Promise.reject('something went wrong!');
+			}
+		})
+    .then(data => {
+			$('#hours-slept-day').text(`${data.hoursSlept} Hours | ${data.sleepQuality} Quality`)
+		})
+    .catch(err => {
+			$('#sleep-input-button').before('<p class="failure-message">Input Correct Data!</p>')
+		});
     $('#user-sleep-hours').val('');
     $('#user-sleep-quality').val('');
     setTimeout(clearField, 1600);
