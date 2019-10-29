@@ -161,10 +161,20 @@ getData('hydration/hydrationData').then(function(hydrationData) {
         numOunces: ounceInput
       })
     })
-    .then(response => response.json())
-    .then(data => $('#water-consumed').text(`${data.numOunces} Ounces \n\n`))
-    .then($('#hydration-input-button').before('<p class="success-message">Data Submitted Successfully!</p>'))
-    .catch($('#hydration-input-button').before('<p class="failure-message">Input Correct Data!</p>'));
+    .then(response => {
+			if (response.ok) {
+				$('#hydration-input-button').before('<p class="success-message">Data Submitted Successfully!</p>')
+				return response.json();
+			} else {
+				return Promise.reject('something went wrong!');
+			}
+		})
+    .then(data => {
+			$('#water-consumed').text(`${data.numOunces} Ounces \n\n`)
+		})
+    .catch(err => {
+			$('#hydration-input-button').before('<p class="failure-message">Input Correct Data!</p>')
+		});
     $('#user-hydration-oz').val('');
     setTimeout(clearField, 1600);
   }
