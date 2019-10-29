@@ -44,10 +44,11 @@ header {
 }
 
 .header-image {
-    width: 15%;
+    width: 200px;
 }
 
 .header-intro {
+  text-align: center;
   font-size: $font_size_xlarge;
   font-weight: $font_weight_medium;
   margin: 5px;
@@ -241,4 +242,13 @@ ul {
   .grid-item {
     width: 90%;
   }
+
+  .header-image {
+      width: 150px;
+  }
+
+  .header-intro {
+    font-size: $font_size_large;
+  }
+
 }
