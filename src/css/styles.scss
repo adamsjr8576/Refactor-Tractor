@@ -178,14 +178,14 @@ canvas {
   margin: auto;
 }
 
-#hydration-date-field, 
+#hydration-date-field,
 #hydration-oz-field,
 #sleep-hours-field,
 #sleep-quality-field {
   @include inputFields;
 }
 
-#user-hydration-date, 
+#user-hydration-date,
 #user-hydration-oz,
 #user-sleep-hours,
 #user-sleep-quality {
@@ -268,4 +268,16 @@ ul {
   text-align: center;
   font-size: $font_size_small;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1400px) {
+  .grid-item {
+    width: 45%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .grid-item {
+    width: 90%;
+  }
 }
