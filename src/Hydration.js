@@ -1,15 +1,9 @@
 import UserFitness from "./UserFitness";
+import userData from "../data/users";
 
 class Hydration extends UserFitness {
   constructor(hydrationData, user) {
     super(hydrationData, user);
-  }
-
-  returnAverageFluidOunces() {
-    return Math.floor(this.userData.reduce((totalOunces, dailyOunces) => {
-      totalOunces += dailyOunces.numOunces;
-      return totalOunces;
-    }, 0) / this.userData.length);
   }
 
   returnDailyFluidOunces(date) {
@@ -21,6 +15,7 @@ class Hydration extends UserFitness {
     let dateIndex = dataDate.lastIndexOf(date);
     return this.userData.slice(dateIndex - 7, dateIndex + 1).map(day => day.numOunces);
   }
+  
 }
 
 export default Hydration;
