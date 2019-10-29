@@ -37,33 +37,14 @@ returnAverageForWeek(date, activityData) {
     return [...this.userData].sort((a, b) => b.flightsOfStairs - a.flightsOfStairs)[0].flightsOfStairs
   }
 
-  returnFriendsStepCount() {
+  returnFriendsCount(property) {
     let friends = this.user.friends.map(friend => this.activityData.filter(el => el.userID === friend));
     let friendDataForDates = friends.map(friend => [...friend].splice(-7));
     let totalStepsPerFriend = friendDataForDates.map(friend => friend.reduce((totalSteps, day) => {
-      totalSteps += day.numSteps
+      totalSteps += Number(day[property]);
       return totalSteps
     }, 0));
-    var stepObj = this.user.friends.reduce((friendSteps, friend, index) => {
-      friendSteps[friend] = totalStepsPerFriend[index];
-      return friendSteps
-    }, {})
-    return [stepObj, this.user.friends[totalStepsPerFriend.indexOf(Math.max(...totalStepsPerFriend))]]
-  }
-
-  returnFriendsStairsCount() {
-    console.log(this.user);
-    let friends = this.user.friends.map(friend => this.activityData.filter(el => el.userID === friend));
-    let friendDataForDates = friends.map(friend => [...friend].splice(-7));
-    let totalStairsPerFriend = friendDataForDates.map(friend => friend.reduce((totalStairs, day) => {
-      totalStairs += day.flightsOfStairs
-      return totalStairs
-    }, 0));
-    var stairObj = this.user.friends.reduce((friendStairs, friend, index) => {
-      friendStairs[friend] = totalStairsPerFriend[index];
-      return friendStairs
-    }, {})
-    return this.user.friends[totalStairsPerFriend.indexOf(Math.max(...totalStairsPerFriend))]
+    return totalStepsPerFriend;
   }
 
   returnThreeDayStreak(activityData) {

@@ -42,11 +42,9 @@ const uniqueUserIndex = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
 
 //Repo variables
 const userRepo = new UserRepo(userData.userData);
-console.log(userRepo);
 
 //Individual Class Repos
 const user = new User(userData.userData[uniqueUserIndex]);
-console.log(user);
 
 function formatDate(date) {
   var monthNames = [
@@ -73,23 +71,6 @@ function formatDate(date) {
 	const formattedDate = dateObject.toLocaleString('en', options);
 
 	$('.date').text(`${formattedDate}`);
-// const user = new User(userData[uniqueUserIndex]);
-// const hydration = new Hydration(hydrationData, user);
-// const sleep = new Sleep(allSleepData, user);
-// const activity = new Activity(activityData, user);
-
-// //Date
-// const date = activityData.reverse()[0].date;
-// const dateObject = new Date(date);
-// const options = {
-//   weekday: 'long',
-//   year: 'numeric',
-//   month: 'long',
-//   day: 'numeric'
-// };
-
-
-// const formattedDate = dateObject.toLocaleString('en', options)
 
 function dropYear(dates) {
   const reformattedDates = dates.map(date => {
@@ -108,22 +89,6 @@ function dropYear(dates) {
     gutter: 10,
 });
 
-  // let $grid = $('#grid').packery({
-  //   itemSelector: 'grid-item',
-  //   columnWidth: 30,
-  //   rowHeight: 30,
-  //   gutter: 4,
-  // });
-  //
-  // let $draggable = $('.draggable').draggabilly({
-  //   containment: true
-  // });
-
-  // pckry.find('.grid-item').each(function (i, gridItem) {
-  //   let draggie = new Draggabilly(gridItem)
-  //   pckry('bindDraggabillyEvents', draggie)
-  // });
-
   // Function to find user name
   function findUserName(id) {
     return userRepo.data.find(user => user.id === id).name;
@@ -137,11 +102,6 @@ getData('hydration/hydrationData').then(function(hydrationData) {
   const hydration = new Hydration(hydrationData.hydrationData, user);
 
   $('#water-consumed').text(`${hydration.returnDailyFluidOunces(date)} Ounces \n\n`);
-
-  $('.friend-hydro-button').on( "click", function() {
-    $('#friends-data').text('Weekly Hydration').after(`${hydration.returnDailyFluidOunces(date)}`);
-  });
-
 
   const weeklyOuncesChart = new Chart(document.getElementById('water-consumed-week').getContext('2d'), {
     type: 'horizontalBar',
@@ -178,7 +138,6 @@ getData('hydration/hydrationData').then(function(hydrationData) {
       }
     }
   });
-});
 
   //User Hydration Input
   $('.hydration-submit').click(hydrationHandler);
@@ -209,6 +168,28 @@ getData('hydration/hydrationData').then(function(hydrationData) {
     $('.success-message').css('display', 'none')
   }
 
+	function insertFriendHydro() {
+		let userIDs = user.friends;
+		let list = `<ul class="friends_ul">`
+			userIDs.forEach(userID => {
+				let userName = findUserName(userID);
+				const userFriend = new User(userData.userData[userID]);
+				const hydrationFriend = new Hydration(hydrationData.hydrationData, userFriend);
+				list += `<li class="friends_li">
+						 <p class="data-text"><b>${userName}</b>:</p>
+						 <p class="data-text border-bottom">${hydrationFriend.returnAvgInfo('numOunces')} Ounces</p>
+						 </li>`;
+			});
+			list += `</ul>`;
+			return list;
+		}
+
+		$('.friend-hydro-button').on( "click", function() {
+			$('.friends_ul').remove();
+			$('#friends-data').text('Weekly Hydration').after(`${insertFriendHydro()}`);
+		});
+	});
+
   //Sleep
 getData('sleep/sleepData').then(function(sleepData) {
   const sleepRepo = new SleepRepo(sleepData.sleepData);
@@ -228,7 +209,7 @@ getData('sleep/sleepData').then(function(sleepData) {
         lineTension: 0.1
       },
       {
-        data: Array(8).fill(sleep.returnAvgSleepInfo('hoursSlept')),
+        data: Array(8).fill(sleep.returnAvgInfo('hoursSlept')),
         label: "Average Hours of Sleep",
         borderColor: "rgba(92, 117, 218, 0.9)",
         fill: false,
@@ -242,7 +223,7 @@ getData('sleep/sleepData').then(function(sleepData) {
         lineTension: 0.1
       },
       {
-        data: Array(8).fill(sleep.returnAvgSleepInfo('sleepQuality')),
+        data: Array(8).fill(sleep.returnAvgInfo('sleepQuality')),
         label: "Average Quality of Sleep",
         borderColor: "rgba(242, 188, 51, 0.9)",
         fill: false,
@@ -291,10 +272,25 @@ getData('sleep/sleepData').then(function(sleepData) {
   });
   $('#longest-sleepers').text(`${findUserName(sleepRepo.returnWeeklyLongestSleepers(date)[1])}: ${sleepRepo.returnWeeklyLongestSleepers(date)[0]} Hours`);
 
-  $('.friend-sleep-button').on( "click", function() {
-    $('.friends_ul').remove();
-  $('#friends-data').text('Weekly Sleep').after(`${sleep.returnAvgSleepInfo('sleepQuality')}`);
-  });
+	function insertFriendSleep() {
+		let userIDs = user.friends;
+		let list = `<ul class="friends_ul">`
+			userIDs.forEach(userID => {
+				let userName = findUserName(userID);
+				const user = new User(userData.userData[userID]);
+				const sleep = new Sleep(sleepData.sleepData, user);
+				list += `<li class="friends_li">
+						 <p class="data-text"><b>${userName}</b>:</p>
+						 <p class="data-text border-bottom">${sleep.returnAvgInfo('sleepQuality')} Sleep Quality</p>`;
+			});
+			list += `</ul>`;
+			return list;
+		}
+
+		$('.friend-sleep-button').on( "click", function() {
+			$('.friends_ul').remove();
+			$('#friends-data').text('Weekly Sleep').after(`${insertFriendSleep()}`);
+		});
 
 });
 
@@ -336,12 +332,6 @@ getData('activity/activityData').then(function(activityData) {
       }
     }
 
-  //   $('.friend-stairs-button').on( "click", function() {
-  //    $('.friends_ul').remove();
-  //   $('#friends-data').text('Weekly Stairs').after(`${activity.insertFriendStairs()}`);
-  // });
-    
-
   });
 
   let percentSteps = activity.returnActivityDay(date, 'numSteps') / user.dailyStepGoal;
@@ -362,87 +352,31 @@ getData('activity/activityData').then(function(activityData) {
   $('#week-review-stairs').text(`${activity.returnAverageForWeek(date, 'flightsOfStairs')} flightsOfStairs`);
 
   // Friends
-// console.log(activity)
-  let userIDs = Object.keys(activity.returnFriendsStepCount()[0]);
-  console.log(userIDs)
 
-  function insertFriendSteps() {
-    let userIDs = Object.keys(activity.returnFriendsStepCount()[0]);
-    let list = `<ul class="friends_ul">`
-    userIDs.forEach(userID => {
-      let userName = findUserName(Number(userID));
-      console.log(userName)
-      // const activity = new Activity(activityData, user);
-      list += `<li class="friends_li">
-             <p class="data-text friends-step"><b>${userName}</b>:</p>
-             <p class="data-text friends-step border-bottom">${activity.returnFriendsStepCount()[0][userID]} Steps</p>`;
-    });
-    list += `</ul>`;
-    return list;
-  }
+	function insertFriendActivity(property, text) {
+		let userIDs = user.friends;
+		let list = `<ul class="friends_ul">`;
+		userIDs.forEach((userID, index) => {
+			let userName = findUserName(userID);
+			const activity = new Activity(activityData.activityData, user);
+			list += `<li class="friends_li">
+						 <p class="data-text friends-step"><b>${userName}</b>:</p>
+						 <p class="data-text friends-step border-bottom">${activity.returnFriendsCount(property)[index]} ${text}</p>`;
+		});
+		list += `</ul>`;
+		return list;
+	}
 
-  $('#friends-data').text('Weekly Steps').after(`${insertFriendSteps()}`);
-
-  function insertFriendHydro() {
-    let list = `<ul class="friends_ul">`
-      userIDs.forEach(userID => {
-        let userName = findUserName(Number(userID));
-        const user = new User(userData[userID]);
-        const hydration = new Hydration(hydrationData, user);
-        list += `<li class="friends_li">
-             <p class="data-text"><b>${userName}</b>:</p>
-             <p class="data-text border-bottom">${hydration.returnAverageFluidOunces()} Ounces</p>`;
-      });
-      list += `</ul>`;
-      return list;
-    }
-
-  function insertFriendSleep() {
-    let list = `<ul class="friends_ul">`
-      userIDs.forEach(userID => {
-        let userName = findUserName(Number(userID));
-        const user = new User(userData[userID]);
-        // const sleep = new Sleep(allSleepData, user);
-        list += `<li class="friends_li">
-             <p class="data-text"><b>${userName}</b>:</p>
-             <p class="data-text border-bottom">${sleep.returnAvgSleepInfo('sleepQuality')} Sleep quality rating</p>`;
-      });
-      list += `</ul>`;
-      return list;
-    }
-
-  function insertFriendStairs() {
-    let list = `<ul class="friends_ul">`
-      userIDs.forEach(userID => {
-        let userName = findUserName(Number(userID));
-        const user = new User(userData[userID]);
-        // const activity = new Activity(activityData, user);
-        list += `<li class="friends_li">
-             <p class="data-text"><b>${userName}</b>:</p>
-             <p class="data-text border-bottom">${activity.returnFriendsStairsCount()} Stairs</p>`;
-      });
-      list += `</ul>`;
-      return list;
-    }
-
-  $('.friend-hydro-button').on( "click", function() {
-    $('.friends_ul').remove();
-    $('#friends-data').text('Weekly Hydration').after(`${insertFriendHydro()}`);
-  });
-
-  $('.friend-sleep-button').on( "click", function() {
-    $('.friends_ul').remove();
-    $('#friends-data').text('Weekly Sleep').after(`${insertFriendSleep()}`);
-  });
+  $('#friends-data').text('Weekly Steps').after(`${insertFriendActivity('numSteps', 'steps')}`);
 
   $('.friend-stairs-button').on( "click", function() {
     $('.friends_ul').remove();
-    $('#friends-data').text('Weekly Stairs').after(`${insertFriendStairs()}`);
+    $('#friends-data').text('Weekly Stairs').after(`${insertFriendActivity('flightsOfStairs', 'stairs')}`);
   });
 
   $('.friend-steps-button').on( "click", function() {
     $('.friends_ul').remove();
-    $('#friends-data').text('Weekly Steps').after(`${insertFriendSteps()}`);
+    $('#friends-data').text('Weekly Steps').after(`${insertFriendActivity('numSteps', 'steps')}`);
   });
 
   // Challenges
@@ -471,4 +405,3 @@ getData('activity/activityData').then(function(activityData) {
 
   });
 });
-
