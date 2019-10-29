@@ -166,6 +166,7 @@ getData('hydration/hydrationData').then(function(hydrationData) {
 
   function clearField() {
     $('.success-message').css('display', 'none')
+    $('.failure-message').css('display', 'none')
   }
 
 	function insertFriendHydro() {
