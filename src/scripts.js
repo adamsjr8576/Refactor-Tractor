@@ -401,13 +401,22 @@ function activityHandler() {
 			flightsOfStairs: flightOfStairsInput
 		})
 	})
-	.then(response => response.json())
-	.then(data => {$("#number-of-minutes-active-day").text(`${data.minutesActive}`)
-								$("#distance").text(`${data.numSteps}`)
-								$("#stairs").text(`${data.flightsOfStairs}`)
+	.then(response => {
+		if (response.ok) {
+			$("#activity-input-button").before('<p class="success-message">Data Submitted Successfully!</p>')
+			return response.json();
+		} else {
+			return Promise.reject('something went wrong!');
+		}
 	})
-	.then(data => {$("#activity-input-button").before('<p class="success-message">Data Submitted Successfully!</p>')})
-	.catch($("#activity-input-button").before('<p class="failure-message">Input Correct Data!</p>'));
+	.then(data => {
+		$("#number-of-minutes-active-day").text(`${data.minutesActive}`)
+		$("#distance").text(`${data.numSteps}`)
+		$("#stairs").text(`${data.flightsOfStairs}`)
+	})
+	.catch(err => {
+		$("#activity-input-button").before('<p class="failure-message">Input Correct Data!</p>')
+	});
 	$("#user-steps").val('');
 	$("#user-stairs").val('');
 	$("#user-minutes").val('');
