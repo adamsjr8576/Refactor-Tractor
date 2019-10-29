@@ -20,7 +20,7 @@ class UserFitness {
 
   returnAvgInfo(property) {
     return Number((this.userData.reduce((acc, day) => {
-      acc += day[property];
+      acc += Number(day[property]);
       return acc;
     }, 0) / this.userData.length).toFixed(2));
   };

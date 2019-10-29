@@ -277,11 +277,11 @@ getData('sleep/sleepData').then(function(sleepData) {
 		let list = `<ul class="friends_ul">`
 			userIDs.forEach(userID => {
 				let userName = findUserName(userID);
-				const user = new User(userData.userData[userID]);
-				const sleep = new Sleep(sleepData.sleepData, user);
+				const userFriend = new User(userData.userData[userID]);
+				const sleepFriend = new Sleep(sleepData.sleepData, userFriend);
 				list += `<li class="friends_li">
 						 <p class="data-text"><b>${userName}</b>:</p>
-						 <p class="data-text border-bottom">${sleep.returnAvgInfo('sleepQuality')} Sleep Quality</p>`;
+						 <p class="data-text border-bottom">${sleepFriend.returnAvgInfo('sleepQuality')} Sleep Quality</p>`;
 			});
 			list += `</ul>`;
 			return list;
