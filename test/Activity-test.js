@@ -46,15 +46,15 @@ describe('Activity', () => {
   });
 
   it('should return the average minutes active for a week', () => {
-    expect(activity.returnAverageForWeek(1, 'minutesActive')).to.equal(148);
+    expect(activity.returnAverageForWeek("2019/06/25", 'minutesActive')).to.equal(180);
   });
 
   it('should return the average steps for a week', () => {
-    expect(activity.returnAverageForWeek(1, 'numSteps')).to.equal(7908);
+    expect(activity.returnAverageForWeek("2019/06/25", 'numSteps')).to.equal(8586);
   });
 
-  it('should return the average steps for a week', () => {
-    expect(activity.returnAverageForWeek(1, 'flightsOfStairs')).to.equal(19);
+  it('should return the average flight of staris for a week', () => {
+    expect(activity.returnAverageForWeek("2019/06/25", 'flightsOfStairs')).to.equal(20);
   });
 
   it('should return false if they did not meet their step goal for a date', () => {
@@ -75,15 +75,7 @@ describe('Activity', () => {
   });
 
   it('should return all friends\' step count for the week ', () => {
-    expect(activity.returnFriendsStepCount()[0]).to.eql({
-      '2': 56526,
-      '3': 46615,
-      '4': 63243
-    });
-  });
-
-  it('should return friend with most steps ', () => {
-    expect(activity.returnFriendsStepCount()[1]).to.equal(4);
+    expect(activity.returnFriendsCount('numSteps')).to.eql([56526, 46615, 63243]);
   });
 
   it('should return back the dates of what days had increasing steps for 3 or more days', () => {

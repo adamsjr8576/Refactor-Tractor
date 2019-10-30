@@ -1,4 +1,6 @@
-const chai = require('chai');
+// const chai = require('chai');
+import chai from "chai";
+import spies from "chai-spies";
 const expect = chai.expect;
 
 import sleepData from '../data/sleep-test-data';
@@ -9,6 +11,7 @@ import UserFitness from '../src/UserFitness'
 import Sleep from '../src/Sleep';
 import User from '../src/User';
 
+chai.use(spies);
 
 describe('Sleep', () => {
 
@@ -27,26 +30,6 @@ describe('Sleep', () => {
     expect(sleep).to.be.an.instanceOf(Sleep);
   });
 
-  it('should return an array of dates for any desired week', () => {
-    expect(sleep.returnWeek(1)).to.eql([
-      "2019/06/19",
-      "2019/06/20",
-      "2019/06/21",
-      "2019/06/22",
-      "2019/06/23",
-      "2019/06/24",
-      "2019/06/25",
-    ]);
-  });
-
-  it('should return the average sleep hours for a single user over all time', () => {
-    expect(sleep.returnAvgSleepInfo('hoursSlept')).to.equal(7.66);
-  });
-
-  it('should return the average sleep quality over all time for a single user', () => {
-    expect(sleep.returnAvgSleepInfo('sleepQuality')).to.equal(2.53);
-  });
-
   it('should return how many hours slept for a specific day', () => {
     expect(sleep.returnSleepInfo('2019/06/15', 'hoursSlept')).to.equal(6.1);
   });
@@ -56,11 +39,37 @@ describe('Sleep', () => {
   });
 
   it('should return hours slept each day for week for a specific user', () => {
-    expect(fullSleep.returnWeekOfSleepInfo(2, 'hoursSlept')).to.eql([7.3, 5.1, 8.6, 10.5, 9.1, 6.5, 6.8]);
+    chai.spy.on(fullSleep, 'returnWeekOfData', () => {
+      return [{
+        "userID": 3,
+        "date": "2019/06/15",
+        "hoursSlept": 10.8,
+        "sleepQuality": 4.7
+      }, {
+        "userID": 3,
+        "date": "2019/06/16",
+        "hoursSlept": 10.7,
+        "sleepQuality": 3.4
+      }];
+    });
+    expect(fullSleep.returnWeekOfSleepInfo('2019/06/24', 'hoursSlept')).to.eql([10.8, 10.7]);
   });
 
-  it('should return hours slept each day for week for a specific user', () => {
-    expect(fullSleep.returnWeekOfSleepInfo(2, 'sleepQuality')).to.eql([4.8, 4.7, 3.7, 1.8, 1.5, 4.2, 2]);
+  it('should return quality sleep each day for week for a specific user', () => {
+    chai.spy.on(fullSleep, 'returnWeekOfData', () => {
+      return [{
+        "userID": 3,
+        "date": "2019/06/15",
+        "hoursSlept": 10.8,
+        "sleepQuality": 4.7
+      }, {
+        "userID": 3,
+        "date": "2019/06/16",
+        "hoursSlept": 10.7,
+        "sleepQuality": 3.4
+      }];
+    });
+    expect(fullSleep.returnWeekOfSleepInfo('2019/06/24', 'sleepQuality')).to.eql([4.7, 3.4]);
   });
 
 });
