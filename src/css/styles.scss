@@ -140,22 +140,15 @@ canvas {
   margin: auto;
 }
 
-#hydration-date-field,
-#hydration-oz-field,
-#sleep-hours-field,
-#sleep-quality-field {
+.input-field-styling {
   @include inputFields;
 }
 
-#user-hydration-date,
-#user-hydration-oz,
-#user-sleep-hours,
-#user-sleep-quality {
+.input-styling {
   @include inputBoxes;
 }
 
-.hydration-submit,
-.sleep-submit {
+.user-input-button {
   @include submitButtons;
 }
 
