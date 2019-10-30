@@ -73,7 +73,7 @@ const hydrationData = [
     "userID": 5,
     "date": "2019/06/17",
     "numOunces": 99
-  }, 
+  },
   {
     "userID": 1,
     "date": "2019/06/18",
@@ -199,6 +199,81 @@ const hydrationData = [
     "date": "2019/06/22",
     "numOunces": 97
   },
+  {
+    "userID": 1,
+    "date": "2019/06/23",
+    "numOunces": 39
+  },
+  {
+    "userID": 2,
+    "date": "2019/06/23",
+    "numOunces": 44
+  },
+  {
+    "userID": 3,
+    "date": "2019/06/23",
+    "numOunces": 35
+  },
+  {
+    "userID": 4,
+    "date": "2019/06/23",
+    "numOunces": 62
+  },
+  {
+    "userID": 5,
+    "date": "2019/06/23",
+    "numOunces": 73
+  },
+  {
+    "userID": 1,
+    "date": "2019/06/24",
+    "numOunces": 61
+  },
+  {
+    "userID": 2,
+    "date": "2019/06/24",
+    "numOunces": 33
+  },
+  {
+    "userID": 3,
+    "date": "2019/06/24",
+    "numOunces": 40
+  },
+  {
+    "userID": 4,
+    "date": "2019/06/24",
+    "numOunces": 66
+  },
+  {
+    "userID": 5,
+    "date": "2019/06/24",
+    "numOunces": 30
+  },
+  {
+    "userID": 1,
+    "date": "2019/06/25",
+    "numOunces": 51
+  },
+  {
+    "userID": 2,
+    "date": "2019/06/25",
+    "numOunces": 67
+  },
+  {
+    "userID": 3,
+    "date": "2019/06/25",
+    "numOunces": 47
+  },
+  {
+    "userID": 4,
+    "date": "2019/06/25",
+    "numOunces": 27
+  },
+  {
+    "userID": 5,
+    "date": "2019/06/25",
+    "numOunces": 76
+  }
 ];
 
 export default hydrationData;
